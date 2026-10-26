@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Competitors</title>
+</head>
+<body>
+  <h1>Competitors</h1>
+<a href="/competitors/new">Add Competitor</a>
+  <ul>
+    <% competitors.forEach((competitor) => { %>
+      <li>
+        <%= competitor.name %> - <%= competitor.school %>
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>
