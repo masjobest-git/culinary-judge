@@ -2,9 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const isSignedIn = require('../middleware/is-signed-in');
-const Competitor = require('../models/Competitor');
-const Evaluation = require('../models/Evaluation');
-const ScoringGroup = require('../models/ScoringGroup');
+const resultsController = require('../controllers/results');
 
 router.get('/', isSignedIn, (req, res) => {
   if (req.user.role !== 'judge') {
@@ -14,91 +12,12 @@ router.get('/', isSignedIn, (req, res) => {
   res.render('judge/index');
 });
 
-router.get('/results', isSignedIn, async (req, res) => {
+router.get('/results', isSignedIn, (req, res) => {
   if (req.user.role !== 'judge') {
     return res.status(403).send('Access denied');
   }
 
-  try {
-    const competitors = await Competitor.find().sort({ name: 1 });
-
-    const evaluations = await Evaluation.find()
-      .populate('competitor')
-      .populate('criterionScores.scoringGroup');
-
-    const scoringGroups = await ScoringGroup.find();
-
-    const results = [];
-
-    for (const competitor of competitors) {
-      for (const category of ['Appetizer', 'Main Course', 'Dessert']) {
-        const categoryEvaluations = evaluations.filter((evaluation) =>
-          evaluation.competitor &&
-          evaluation.competitor._id.toString() === competitor._id.toString() &&
-          evaluation.dishCategory === category
-        );
-
-        if (categoryEvaluations.length === 0) {
-          continue;
-        }
-
-        const groupResults = [];
-
-        for (const group of scoringGroups) {
-          let totalPoints = 0;
-          let judgeCount = 0;
-
-          for (const evaluation of categoryEvaluations) {
-            const groupScores = evaluation.criterionScores.filter((score) =>
-              score.scoringGroup &&
-              score.scoringGroup._id.toString() === group._id.toString()
-            );
-
-            if (groupScores.length > 0) {
-              totalPoints += groupScores.reduce(
-                (sum, score) => sum + score.points,
-                0
-              );
-              judgeCount++;
-            }
-          }
-
-          groupResults.push({
-            name: group.name,
-            average: judgeCount > 0
-              ? Number((totalPoints / judgeCount).toFixed(2))
-              : null
-          });
-        }
-
-        const totalPoints = categoryEvaluations.reduce(
-          (sum, evaluation) =>
-            sum + evaluation.criterionScores.reduce(
-              (scoreSum, score) => scoreSum + score.points,
-              0
-            ),
-          0
-        );
-
-        results.push({
-          competitor: competitor,
-          category: category,
-          judgeCount: categoryEvaluations.length,
-          groups: groupResults,
-          averageTotal: Number(
-            (totalPoints / categoryEvaluations.length).toFixed(2)
-          )
-        });
-      }
-    }
-
-    res.render('judge/results', {
-      results: results
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send('Error loading results');
-  }
+  resultsController.showResults(req, res);
 });
 
 module.exports = router;
