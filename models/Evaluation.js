@@ -12,17 +12,17 @@ const evaluationSchema = new mongoose.Schema({
     ref: 'Competitor',
     required: true
   },
-  scoringGroup: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'ScoringGroup',
-    required: true
-  },
   dishCategory: {
     type: String,
     enum: ['Appetizer', 'Main Course', 'Dessert'],
     required: true
   },
   criterionScores: [{
+    scoringGroup: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'ScoringGroup',
+      required: true
+    },
     criterionName: {
       type: String,
       required: true

@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluation Results</title>
+</head>
+<body>
+  <h1>Evaluation Results</h1>
+
+  <% if (results.length === 0) { %>
+    <p>No evaluations have been submitted yet.</p>
+  <% } else { %>
+    <table border="1" cellpadding="8">
+      <thead>
+        <tr>
+          <th>Competitor</th>
+          <th>Dish Category</th>
+          <th>Judges</th>
+          <th>Preparatory Work</th>
+          <th>Cooking Process</th>
+          <th>Final Tasks</th>
+          <th>Taste and Appearance</th>
+          <th>Average Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% results.forEach((result) => { %>
+          <tr>
+            <td><%= result.competitor.name %></td>
+            <td><%= result.category %></td>
+            <td><%= result.judgeCount %></td>
+
+            <% result.groups.forEach((group) => { %>
+              <td>
+                <%= group.average === null ? '-' : group.average %>
+              </td>
+            <% }) %>
+
+            <td><%= result.averageTotal %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <p><a href="/judge">Back to Judge Panel</a></p>
+</body>
+</html>

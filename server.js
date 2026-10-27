@@ -18,6 +18,7 @@ const competitorsRouter = require('./routes/competitors');
 const authRouter = require('./routes/auth');
 const adminRouter = require('./routes/admin');
 const judgeRouter = require('./routes/judge');
+const evaluationsRouter = require('./routes/evaluations');
 require('dotenv').config();
 //const morgan = require("morgan");
 const methodOverride = require("method-override");
@@ -25,12 +26,13 @@ dns.setServers(["1.1.1.1", "8.8.8.8"]);
 //const Listing = require("./models/listing");
 
 // Middleware
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
 app.use('/judge', judgeRouter);
 app.use('/competitors', competitorsRouter);
+app.use('/evaluations', evaluationsRouter);
 //MONGOOSE DB conection
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {

@@ -9,9 +9,11 @@
 <a href="/competitors/new">Add Competitor</a>
   <ul>
     <% competitors.forEach((competitor) => { %>
-      <li>
-        <%= competitor.name %> - <%= competitor.school %>
-      </li>
+<li>
+  <%= competitor.name %> - <%= competitor.school %>
+
+  <a href="/evaluations/new/<%= competitor._id %>">Evaluate</a>
+</li>
     <% }) %>
   </ul>
 </body>

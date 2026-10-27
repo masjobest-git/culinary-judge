@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluate Competitor</title>
+</head>
+<body>
+
+  <h1>Evaluate Competitor</h1>
+
+  <h2><%= competitor.name %></h2>
+  <p>School: <%= competitor.school %></p>
+
+  <form action="/evaluations/<%= competitor._id %>" method="POST">
+
+    <label for="dishCategory">Dish Category:</label>
+    <select id="dishCategory" name="dishCategory" required>
+      <option value="">Select category</option>
+      <option value="Appetizer">Appetizer</option>
+      <option value="Main Course">Main Course</option>
+      <option value="Dessert">Dessert</option>
+    </select>
+
+    <% scoringGroups.forEach((group) => { %>
+      <h3><%= group.name %></h3>
+
+      <% group.criteria.forEach((criterion) => { %>
+        <p>
+          <label>
+            <%= criterion.name %>
+            (0–<%= criterion.maxPoints %> points)
+          </label>
+
+          <input
+            type="number"
+            name="scores[<%= criterion.name %>]"
+            min="<%= criterion.minPoints %>"
+            max="<%= criterion.maxPoints %>"
+            required
+          >
+        </p>
+      <% }) %>
+    <% }) %>
+
+    <button type="submit">Save Evaluation</button>
+
+  </form>
+
+  <p><a href="/competitors">Back to Competitors</a></p>
+
+</body>
+</html>
