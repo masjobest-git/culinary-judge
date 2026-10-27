@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Edit Competitor</title>
+</head>
+<body>
+
+  <%- include('../partials/navbar') %>
+
+  <h1>Edit Competitor</h1>
+
+  <form action="/competitors/<%= competitor._id %>/edit" method="POST">
+    <label for="name">Competitor Name:</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      value="<%= competitor.name %>"
+      required
+    >
+
+    <label for="school">School:</label>
+    <input
+      type="text"
+      id="school"
+      name="school"
+      value="<%= competitor.school %>"
+      required
+    >
+
+    <button type="submit">Save Changes</button>
+  </form>
+
+  <br>
+
+  <a href="/competitors">Back to Competitors</a>
+
+</body>
+</html>

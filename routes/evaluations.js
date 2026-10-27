@@ -19,6 +19,20 @@ router.post(
   evaluationsController.saveEvaluation
 );
 
+// Open correction form
+router.get(
+  '/:evaluationId/correct',
+  isSignedIn,
+  evaluationsController.showCorrectionForm
+);
+
+// Save corrected evaluation
+router.post(
+  '/:evaluationId/correct',
+  isSignedIn,
+  evaluationsController.correctEvaluation
+);
+
 // View evaluation results
 router.get('/results', isSignedIn, (req, res) => {
   if (req.user.role !== 'judge') {

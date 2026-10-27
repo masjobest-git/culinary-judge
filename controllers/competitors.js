@@ -38,8 +38,68 @@ async function getCompetitors(req, res) {
   }
 }
 
+// Show edit competitor form
+async function showEditForm(req, res) {
+  try {
+    const competitor = await Competitor.findById(req.params.id);
+
+    if (!competitor) {
+      return res.status(404).send('Competitor not found');
+    }
+
+    res.render('competitors/edit', {
+      competitor: competitor
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error loading competitor');
+  }
+}
+
+// Update competitor
+async function updateCompetitor(req, res) {
+  try {
+    const competitor = await Competitor.findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name,
+        school: req.body.school
+      },
+      { runValidators: true }
+    );
+
+    if (!competitor) {
+      return res.status(404).send('Competitor not found');
+    }
+
+    res.redirect('/competitors');
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error updating competitor');
+  }
+}
+
+// Delete competitor
+async function deleteCompetitor(req, res) {
+  try {
+    const competitor = await Competitor.findByIdAndDelete(req.params.id);
+
+    if (!competitor) {
+      return res.status(404).send('Competitor not found');
+    }
+
+    res.redirect('/competitors');
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error deleting competitor');
+  }
+}
+
 module.exports = {
   showNewForm,
   createCompetitor,
-  getCompetitors
+  getCompetitors,
+  showEditForm,
+  updateCompetitor,
+  deleteCompetitor
 };

@@ -13,4 +13,13 @@ router.post('/', isSignedIn, competitorsController.createCompetitor);
 // Show all competitors
 router.get('/', isSignedIn, competitorsController.getCompetitors);
 
+// Show edit competitor form
+router.get('/:id/edit', isSignedIn, competitorsController.showEditForm);
+
+// Update competitor
+router.post('/:id/edit', isSignedIn, competitorsController.updateCompetitor);
+
+// Delete competitor
+router.post('/:id/delete', isSignedIn, competitorsController.deleteCompetitor);
+
 module.exports = router;

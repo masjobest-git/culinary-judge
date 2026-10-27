@@ -5,16 +5,27 @@ const bcrypt = require('bcrypt');
 // Show admin panel
 function showAdminPanel(req, res) {
   if (req.user.role !== 'admin') {
-    return res.status(403).send('Access denied');
+    req.session.errorMessage = 'Access denied. You do not have permission to access the Admin Panel.';
+    return res.redirect('/judge');
   }
 
-  res.render('admin/index');
+  const errorMessage = req.session.errorMessage;
+  const successMessage = req.session.successMessage;
+
+  delete req.session.errorMessage;
+  delete req.session.successMessage;
+
+  res.render('admin/index', {
+    errorMessage,
+    successMessage
+  });
 }
 
 // Show new judge form
 function showNewJudgeForm(req, res) {
   if (req.user.role !== 'admin') {
-    return res.status(403).send('Access denied');
+    req.session.errorMessage = 'Access denied. You do not have permission to access the Admin Panel.';
+    return res.redirect('/judge');
   }
 
   res.render('admin/new-judge');
@@ -23,7 +34,8 @@ function showNewJudgeForm(req, res) {
 // Create judge
 async function createJudge(req, res) {
   if (req.user.role !== 'admin') {
-    return res.status(403).send('Access denied');
+    req.session.errorMessage = 'Access denied. You do not have permission to access the Admin Panel.';
+    return res.redirect('/judge');
   }
 
   try {
@@ -32,7 +44,8 @@ async function createJudge(req, res) {
     });
 
     if (existingUser) {
-      return res.send('Username already exists');
+      req.session.errorMessage = 'Username already exists.';
+      return res.redirect('/admin/judges/new');
     }
 
     const passwordHash = await bcrypt.hash(req.body.password, 10);
@@ -45,10 +58,12 @@ async function createJudge(req, res) {
 
     await judge.save();
 
+    req.session.successMessage = 'Judge created successfully!';
     res.redirect('/admin');
   } catch (error) {
     console.log(error);
-    res.status(500).send('Error creating judge');
+    req.session.errorMessage = 'Error creating judge.';
+    res.redirect('/admin/judges/new');
   }
 }
 

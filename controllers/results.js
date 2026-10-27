@@ -65,6 +65,12 @@ async function showResults(req, res) {
           0
         );
 
+        // Find the current judge's evaluation
+        const myEvaluation = categoryEvaluations.find(
+          (evaluation) =>
+            evaluation.judge.toString() === req.user._id.toString()
+        );
+
         results.push({
           competitor: competitor,
           category: category,
@@ -72,14 +78,19 @@ async function showResults(req, res) {
           groups: groupResults,
           averageTotal: Number(
             (totalPoints / categoryEvaluations.length).toFixed(2)
-          )
+          ),
+          myEvaluation: myEvaluation || null
         });
       }
     }
 
     res.render('judge/results', {
-      results: results
+      results: results,
+      successMessage: req.session.successMessage
     });
+
+    delete req.session.successMessage;
+
   } catch (error) {
     console.log(error);
     res.status(500).send('Error loading results');

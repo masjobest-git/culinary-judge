@@ -1,22 +1,103 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Culinary Judge</title>
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-  <h1>Culinary Judge</h1>
+  <div class="home-container">
 
-  <p>Welcome to Culinary Judge!</p>
+    <nav class="home-navbar">
+      <a href="/" class="home-brand">
+        <i class="fa-solid fa-utensils"></i> Culinary Judge
+      </a>
 
-  <ul>
-    <li><a href="/admin">Admin Panel</a></li>
-    <li><a href="/competitors">View Competitors</a></li>
-    <li><a href="/auth/login">Login</a></li>
-  </ul>
+      <div class="home-links">
+        <a href="/">Home</a>
+        <a href="about">About</a>
+        <a href="#features">Features</a>
+        <a href="/auth/login">Login</a>
+      </div>
+    </nav>
 
-</body>
-</html>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Fair scores. Great food. Better competitions.</h1>
+
+        <p>
+          A web application for managing culinary competitions,
+          judges, scoring criteria, and results.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="/auth/login" class="button-primary">
+            Get Started <i class="fa-solid fa-arrow-right"></i>
+          </a>
+
+          <a href="#features" class="button-secondary">Learn More</a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img
+          src="/images/chef-competition.png"
+          alt="Chef preparing a dish at a culinary competition"
+        >
+      </div>
+    </section>
+
+    <section id="features" class="features">
+      <h2>Why Choose Culinary Judge?</h2>
+
+      <div class="feature-grid">
+
+        <div class="feature-card">
+          <h3><i class="fa-solid fa-users"></i></h3>
+          <h3>Manage Participants</h3>
+          <p>Judges and competitors</p>
+        </div>
+
+        <div class="feature-card">
+          <h3><i class="fa-solid fa-clipboard-list"></i></h3>
+          <h3>Set Up Criteria</h3>
+          <p>Groups and points</p>
+        </div>
+
+        <div class="feature-card">
+          <h3><i class="fa-solid fa-utensils"></i></h3>
+          <h3>Simple Judging</h3>
+          <p>Enter scores</p>
+        </div>
+
+        <div class="feature-card">
+          <h3><i class="fa-solid fa-chart-column"></i></h3>
+          <h3>Automatic Results</h3>
+          <p>Totals and rankings</p>
+        </div>
+
+        <div class="feature-card">
+          <h3><i class="fa-solid fa-shield-halved"></i></h3>
+          <h3>Transparent &amp; Fair</h3>
+          <p>Consistent evaluation</p>
+        </div>
+
+      </div>
+    </section>
+
+<footer id="contact" class="home-footer">
+  <div>
+    <h2>
+      <i class="fa-solid fa-utensils"></i> Culinary Judge
+    </h2>
+    <p>Good food. Fair judgment. Great competitions.</p>
+  </div>
+
+  <p> © 2026</p>
+</footer>

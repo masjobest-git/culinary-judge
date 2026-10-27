@@ -1,17 +1,27 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
   <title>Evaluation Results</title>
 </head>
+
 <body>
+  <%- include('../partials/navbar') %>
+
   <h1>Evaluation Results</h1>
+
+  <% if (successMessage) { %>
+    <p class="success-message"><%= successMessage %></p>
+  <% } %>
 
   <% if (results.length === 0) { %>
     <p>No evaluations have been submitted yet.</p>
   <% } else { %>
+
     <table border="1" cellpadding="8">
       <thead>
         <tr>
@@ -23,8 +33,10 @@
           <th>Final Tasks</th>
           <th>Taste and Appearance</th>
           <th>Average Total</th>
+          <th>My Evaluation</th>
         </tr>
       </thead>
+
       <tbody>
         <% results.forEach((result) => { %>
           <tr>
@@ -39,12 +51,45 @@
             <% }) %>
 
             <td><%= result.averageTotal %></td>
+
+            <td>
+              <% if (result.myEvaluation) { %>
+
+                <% if (result.myEvaluation.correctionUsed) { %>
+                  <p>Correction used</p>
+
+                  <% if (result.myEvaluation.correctionComment) { %>
+                    <p>
+                      <strong>Reason:</strong>
+                      <%= result.myEvaluation.correctionComment %>
+                    </p>
+                  <% } %>
+
+                  <% if (result.myEvaluation.correctedAt) { %>
+                    <p>
+                      <strong>Corrected at:</strong>
+                      <%= result.myEvaluation.correctedAt.toLocaleDateString() %>
+                    </p>
+                  <% } %>
+
+                <% } else { %>
+                  <a href="/evaluations/<%= result.myEvaluation._id %>/correct">
+                    Correct Evaluation
+                  </a>
+                <% } %>
+
+              <% } else { %>
+                <span>No evaluation submitted by you</span>
+              <% } %>
+            </td>
           </tr>
         <% }) %>
       </tbody>
     </table>
+
   <% } %>
 
   <p><a href="/judge">Back to Judge Panel</a></p>
 </body>
+
 </html>

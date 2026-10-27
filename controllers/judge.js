@@ -4,16 +4,27 @@ const resultsController = require('./results');
 // Show judge dashboard
 function showJudgePanel(req, res) {
   if (req.user.role !== 'judge') {
-    return res.status(403).send('Access denied');
+    req.session.errorMessage = 'Access denied. You do not have permission to access the Judge Panel.';
+    return res.redirect('/admin');
   }
 
-  res.render('judge/index');
+  const errorMessage = req.session.errorMessage;
+  const successMessage = req.session.successMessage;
+
+  delete req.session.errorMessage;
+  delete req.session.successMessage;
+
+  res.render('judge/index', {
+    errorMessage,
+    successMessage
+  });
 }
 
 // Show evaluation results
 function showResults(req, res) {
   if (req.user.role !== 'judge') {
-    return res.status(403).send('Access denied');
+    req.session.errorMessage = 'Access denied. You do not have permission to access the Judge Panel.';
+    return res.redirect('/admin');
   }
 
   resultsController.showResults(req, res);

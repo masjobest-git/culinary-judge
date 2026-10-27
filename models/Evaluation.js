@@ -32,7 +32,20 @@ const evaluationSchema = new mongoose.Schema({
       required: true,
       min: 0
     }
-  }]
+  }],
+  correctionUsed: {
+    type: Boolean,
+    default: false
+  },
+  correctionComment: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  correctedAt: {
+    type: Date,
+    default: null
+  }
 });
 
 evaluationSchema.index(

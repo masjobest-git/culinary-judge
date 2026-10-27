@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Correct Evaluation</title>
+</head>
+<body>
+  <%- include('../partials/navbar') %>
+
+  <h1>Correct Evaluation</h1>
+
+  <h2><%= competitor.name %></h2>
+  <p>School: <%= competitor.school %></p>
+  <p>Dish Category: <%= evaluation.dishCategory %></p>
+
+  <form action="/evaluations/<%= evaluation._id %>/correct" method="POST">
+
+    <% scoringGroups.forEach((group) => { %>
+      <h3><%= group.name %></h3>
+
+      <% group.criteria.forEach((criterion) => {
+        const existingScore = evaluation.criterionScores.find(
+          (score) => score.criterionName === criterion.name
+        );
+      %>
+        <p>
+          <label>
+            <%= criterion.name %>
+            (<%= criterion.minPoints %>–<%= criterion.maxPoints %> points)
+          </label>
+
+          <input
+            type="number"
+            name="scores[<%= criterion.name %>]"
+            min="<%= criterion.minPoints %>"
+            max="<%= criterion.maxPoints %>"
+            value="<%= existingScore ? existingScore.points : '' %>"
+            required
+          >
+        </p>
+      <% }) %>
+    <% }) %>
+
+    <p>
+      <label for="correctionComment">
+        Reason for correction (required):
+      </label>
+      <textarea
+        id="correctionComment"
+        name="correctionComment"
+        rows="4"
+        required
+      ></textarea>
+    </p>
+
+    <button type="submit">Save Correction</button>
+  </form>
+
+  <p><a href="/judge/results">Back to Results</a></p>
+</body>
+</html>
