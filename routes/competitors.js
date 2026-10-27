@@ -1,32 +1,16 @@
 
 const express = require('express');
 const router = express.Router();
-const Competitor = require('../models/Competitor');
 const isSignedIn = require('../middleware/is-signed-in');
+const competitorsController = require('../controllers/competitors');
 
-router.get('/new', isSignedIn, (req, res) => {
-  res.render('competitors/new');
-});
-router.post('/', isSignedIn, async (req, res) => {
-  try {
-    const competitor = new Competitor({
-      name: req.body.name,
-      school: req.body.school,
-      createdBy: req.user._id
-    });
+// Show new competitor form
+router.get('/new', isSignedIn, competitorsController.showNewForm);
 
-    await competitor.save();
+// Create competitor
+router.post('/', isSignedIn, competitorsController.createCompetitor);
 
-    res.redirect('/competitors');
-  } catch (error) {
-    console.log(error);
-    res.status(500).send('Error creating competitor');
-  }
-});
-
-router.get('/', isSignedIn, async (req, res) => {
-  const competitors = await Competitor.find();
-  res.render('competitors/index', { competitors: competitors });
-});
+// Show all competitors
+router.get('/', isSignedIn, competitorsController.getCompetitors);
 
 module.exports = router;

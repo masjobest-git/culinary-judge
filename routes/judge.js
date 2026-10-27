@@ -2,22 +2,10 @@
 const express = require('express');
 const router = express.Router();
 const isSignedIn = require('../middleware/is-signed-in');
-const resultsController = require('../controllers/results');
+const judgeController = require('../controllers/judge');
 
-router.get('/', isSignedIn, (req, res) => {
-  if (req.user.role !== 'judge') {
-    return res.status(403).send('Access denied');
-  }
+router.get('/', isSignedIn, judgeController.showJudgePanel);
 
-  res.render('judge/index');
-});
-
-router.get('/results', isSignedIn, (req, res) => {
-  if (req.user.role !== 'judge') {
-    return res.status(403).send('Access denied');
-  }
-
-  resultsController.showResults(req, res);
-});
+router.get('/results', isSignedIn, judgeController.showResults);
 
 module.exports = router;
