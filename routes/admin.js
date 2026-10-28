@@ -8,6 +8,9 @@ const rankingController = require('../controllers/ranking');
 // Show admin panel
 router.get('/', isSignedIn, adminController.showAdminPanel);
 
+// Show all judges
+router.get('/judges', isSignedIn, adminController.showJudges);
+
 // Show final ranking
 router.get('/ranking', isSignedIn, rankingController.showRanking);
 
@@ -16,5 +19,11 @@ router.get('/judges/new', isSignedIn, adminController.showNewJudgeForm);
 
 // Create judge
 router.post('/judges', isSignedIn, adminController.createJudge);
+
+// Update judge
+router.post('/judges/:id/edit', isSignedIn, adminController.updateJudge);
+
+// Delete judge
+router.post('/judges/:id/delete', isSignedIn, adminController.deleteJudge);
 
 module.exports = router;

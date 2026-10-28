@@ -1,85 +1,140 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/panel.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  <title>Judge Panel | Culinary Judge</title>
+
+  <title>Judge Dashboard | Culinary Judge</title>
 </head>
-<body class="judge-page">
 
-  <%- include('../partials/navbar') %>
+<body class="admin-page judge-page">
 
-  <div class="judge-layout">
+  <div class="dashboard-layout">
 
-    <!-- Left sidebar -->
-    <aside class="judge-sidebar">
-      <div class="judge-sidebar-heading">
-        <i class="fa-solid fa-gavel"></i>
-        <h2>Judge Panel</h2>
-      </div>
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
 
-      <p class="judge-sidebar-text">Evaluation Menu</p>
-
-      <a class="judge-menu-button" href="/competitors">
-        <i class="fa-solid fa-users"></i>
-        <span>View Competitors</span>
+      <a href="/" class="dashboard-brand">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Culinary Judge</span>
       </a>
 
-      <a class="judge-menu-button" href="/evaluations/results">
-        <i class="fa-solid fa-clipboard-check"></i>
-        <span>View Evaluation Results</span>
-      </a>
+      <p class="dashboard-menu-label">MAIN MENU</p>
 
-      <a class="judge-menu-button" href="/">
+      <a href="/judge" class="dashboard-nav-link active">
         <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="/competitors" class="dashboard-nav-link">
+        <i class="fa-solid fa-users"></i>
+        <span>Competitors</span>
+      </a>
+
+      <a href="/evaluations/results" class="dashboard-nav-link">
+        <i class="fa-solid fa-clipboard-check"></i>
+        <span>My Evaluation Results</span>
+      </a>
+
+      <div class="dashboard-sidebar-spacer"></div>
+
+      <a href="/" class="dashboard-nav-link">
+        <i class="fa-solid fa-arrow-left"></i>
         <span>Back to Home</span>
       </a>
 
-      <form action="/auth/logout" method="POST" class="judge-logout-form">
-        <button type="submit" class="judge-menu-button judge-logout-button">
+      <form action="/auth/logout" method="POST">
+        <button type="submit" class="dashboard-nav-link dashboard-logout">
           <i class="fa-solid fa-right-from-bracket"></i>
           <span>Logout</span>
         </button>
       </form>
+
     </aside>
 
     <!-- Main content -->
-    <main class="judge-main">
+    <div class="dashboard-main">
 
-      <div class="judge-welcome">
-        <div class="judge-welcome-icon">
-          <i class="fa-solid fa-utensils"></i>
+      <header class="dashboard-topbar">
+        <div>
+          <span class="dashboard-breadcrumb">Culinary Judge /</span>
+          <strong>Judge Dashboard</strong>
         </div>
 
-        <h1>Welcome to Culinary Judge!</h1>
-        <p>Manage your evaluations and review the results of the competition.</p>
-      </div>
+        <div class="dashboard-admin-label">
+          <i class="fa-solid fa-gavel"></i>
+          <span>Judge Panel</span>
+        </div>
+      </header>
 
-      <% if (errorMessage) { %>
-        <p class="error-message"><%= errorMessage %></p>
-      <% } %>
+      <main class="dashboard-content">
 
-      <% if (successMessage) { %>
-        <p class="success-message"><%= successMessage %></p>
-      <% } %>
+        <div class="dashboard-welcome">
+          <div>
+            <p class="dashboard-eyebrow">JUDGE WORKSPACE</p>
+            <h1>Welcome to Culinary Judge!</h1>
+            <p>Manage your evaluations and review competition results.</p>
+          </div>
 
-      <section class="judge-evaluation-card">
-        <h2>
-          <i class="fa-solid fa-clipboard-list"></i>
-          Evaluation
-        </h2>
+          <div class="dashboard-welcome-icon">
+            <i class="fa-solid fa-gavel"></i>
+          </div>
+        </div>
 
-        <p>Select a competitor to start the evaluation.</p>
+        <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+          <div class="error-message">
+            <%= errorMessage %>
+          </div>
+        <% } %>
 
-        <a href="/competitors" class="judge-primary-button">
-          <i class="fa-solid fa-arrow-right"></i>
-          Select Competitor
-        </a>
-      </section>
+        <% if (typeof successMessage !== 'undefined' && successMessage) { %>
+          <div class="success-message">
+            <%= successMessage %>
+          </div>
+        <% } %>
 
-    </main>
+        <!-- Dashboard cards -->
+        <div class="judge-dashboard-cards">
+
+          <section class="judge-dashboard-card">
+            <div class="judge-dashboard-card-icon">
+              <i class="fa-solid fa-clipboard-list"></i>
+            </div>
+
+            <h2>Evaluations</h2>
+            <p>Open the competitors list to select a competitor and start an evaluation.</p>
+
+            <a href="/competitors" class="panel-primary-button">
+              <i class="fa-solid fa-arrow-right"></i>
+              View Competitors
+            </a>
+          </section>
+
+          <section class="judge-dashboard-card">
+            <div class="judge-dashboard-card-icon">
+              <i class="fa-solid fa-chart-column"></i>
+            </div>
+
+            <h2>My Evaluation Results</h2>
+            <p>Review your submitted scores and see the available evaluation results.</p>
+
+            <a href="/evaluations/results" class="panel-primary-button">
+              <i class="fa-solid fa-arrow-right"></i>
+              View My Results
+            </a>
+          </section>
+
+        </div>
+
+      </main>
+
+    </div>
+
   </div>
 
 </body>

@@ -1,76 +1,134 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/panel.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <title>Admin Panel | Culinary Judge</title>
 </head>
+
 <body class="admin-page">
 
-  <%- include('../partials/navbar') %>
+  <div class="dashboard-layout">
 
-  <main class="admin-container">
+    <aside class="dashboard-sidebar">
+      <a href="/" class="dashboard-brand">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Culinary Judge</span>
+      </a>
 
-    <header class="admin-heading">
-      <div class="admin-heading-icon">
-        <i class="fa-solid fa-user-shield"></i>
-      </div>
-      <div>
-        <h1>Admin Panel</h1>
-        <p>Manage competitors, judges and competition results.</p>
-      </div>
-    </header>
+      <p class="dashboard-menu-label">MAIN MENU</p>
 
-    <% if (errorMessage) { %>
-      <p class="error-message"><%= errorMessage %></p>
-    <% } %>
+      <a href="/admin" class="dashboard-nav-link active">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+      </a>
 
-    <% if (successMessage) { %>
-      <p class="success-message"><%= successMessage %></p>
-    <% } %>
-
-    <h2 class="admin-section-title">Manage Culinary Judge</h2>
-
-    <div class="admin-cards">
-
-      <a href="/competitors" class="admin-card">
+      <a href="/competitors" class="dashboard-nav-link">
         <i class="fa-solid fa-users"></i>
-        <h3>Competitors</h3>
-        <p>View and manage competition participants.</p>
-        <span>View Competitors <i class="fa-solid fa-arrow-right"></i></span>
+        <span>Competitors</span>
       </a>
 
-      <a href="/admin/judges/new" class="admin-card">
-        <i class="fa-solid fa-user-plus"></i>
-        <h3>Create Judge</h3>
-        <p>Create an account for a competition judge.</p>
-        <span>Create Judge <i class="fa-solid fa-arrow-right"></i></span>
+      <a href="/admin/judges" class="dashboard-nav-link">
+        <i class="fa-solid fa-user-check"></i>
+        <span>Judges</span>
       </a>
 
-      <a href="/admin/ranking" class="admin-card admin-ranking-card">
+      <a href="/admin/ranking" class="dashboard-nav-link">
         <i class="fa-solid fa-trophy"></i>
-        <h3>Final Ranking</h3>
-        <p>Review the final scores and ranking of competitors.</p>
-        <span>View Final Ranking <i class="fa-solid fa-arrow-right"></i></span>
+        <span>Final Ranking</span>
       </a>
 
-    </div>
+      <div class="dashboard-sidebar-spacer"></div>
 
-    <footer class="admin-footer">
-      <a href="/" class="admin-back-link">
-        <i class="fa-solid fa-house"></i> Back to Home
+      <a href="/" class="dashboard-nav-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Back to Home</span>
       </a>
 
       <form action="/auth/logout" method="POST">
-        <button type="submit" class="admin-logout-button">
-          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        <button type="submit" class="dashboard-nav-link dashboard-logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
         </button>
       </form>
-    </footer>
+    </aside>
 
-  </main>
+    <div class="dashboard-main">
+
+      <header class="dashboard-topbar">
+        <div>
+          <span class="dashboard-breadcrumb">Culinary Judge /</span>
+          <strong> Admin Dashboard</strong>
+        </div>
+
+        <div class="dashboard-admin-label">
+          <i class="fa-solid fa-user-shield"></i>
+          <span>Administrator</span>
+        </div>
+      </header>
+
+      <main class="dashboard-content">
+
+        <div class="dashboard-welcome">
+          <div>
+            <p class="dashboard-eyebrow">ADMINISTRATION</p>
+            <h1>Admin Dashboard</h1>
+            <p>Manage competitors, judges and competition results.</p>
+          </div>
+
+          <div class="dashboard-welcome-icon">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+        </div>
+
+        <% if (errorMessage) { %>
+          <p class="error-message"><%= errorMessage %></p>
+        <% } %>
+
+        <% if (successMessage) { %>
+          <p class="success-message"><%= successMessage %></p>
+        <% } %>
+
+        <h2 class="dashboard-section-title">Competition Management</h2>
+
+        <div class="dashboard-cards">
+
+          <a href="/competitors" class="dashboard-card">
+            <div class="dashboard-card-icon blue">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <h3>Competitors</h3>
+            <p>View and manage competition participants.</p>
+            <span>View Competitors <i class="fa-solid fa-arrow-right"></i></span>
+          </a>
+
+          <a href="/admin/judges" class="dashboard-card">
+            <div class="dashboard-card-icon purple">
+              <i class="fa-solid fa-user-check"></i>
+            </div>
+            <h3>Judges</h3>
+            <p>View and manage competition judges.</p>
+            <span>View Judges <i class="fa-solid fa-arrow-right"></i></span>
+          </a>
+
+          <a href="/admin/ranking" class="dashboard-card">
+            <div class="dashboard-card-icon gold">
+              <i class="fa-solid fa-trophy"></i>
+            </div>
+            <h3>Final Ranking</h3>
+            <p>Review the final scores and ranking of competitors.</p>
+            <span>View Final Ranking <i class="fa-solid fa-arrow-right"></i></span>
+          </a>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
 
 </body>
 </html>

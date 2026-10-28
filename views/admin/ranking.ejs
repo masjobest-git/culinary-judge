@@ -1,142 +1,208 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/panel.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <title>Final Ranking | Culinary Judge</title>
 </head>
 
 <body class="admin-page">
+  <div class="dashboard-layout">
 
-  <%- include('../partials/navbar') %>
-
-  <main class="admin-container">
-
-    <header class="admin-heading">
-      <div class="admin-heading-icon">
-        <i class="fa-solid fa-trophy"></i>
-      </div>
-
-      <div>
-        <h1>Final Ranking</h1>
-        <p>Final scores of all competition participants.</p>
-      </div>
-    </header>
-
-    <div class="ranking-report-header">
-      <h2>Official Final Ranking</h2>
-      <p>
-        <strong>Report date:</strong>
-        <%= new Date().toLocaleDateString('en-GB') %>
-      </p>
-    </div>
-
-    <% if (errorMessage) { %>
-      <p class="error-message"><%= errorMessage %></p>
-    <% } %>
-
-    <p>
-      <strong>Number of judges:</strong>
-      <%= judgeCount %>
-    </p>
-
-    <button
-      type="button"
-      class="ranking-pdf-button"
-      onclick="window.print()"
-    >
-      <i class="fa-solid fa-file-pdf"></i>
-      Download Final Ranking PDF
-    </button>
-
-    <% if (judgeCount === 0) { %>
-
-      <p>No judges have been created yet.</p>
-
-    <% } else if (ranking.length === 0) { %>
-
-      <p>No competitors have been added yet.</p>
-
-    <% } else { %>
-
-      <div class="results-table-wrapper">
-        <table class="results-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Competitor</th>
-              <th>Appetizer</th>
-              <th>Main Course</th>
-              <th>Dessert</th>
-              <th>Final Score</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <% ranking.forEach((item) => { %>
-              <tr>
-                <td>
-                  <% if (item.rank === 1) { %>
-                    <i class="fa-solid fa-trophy"></i> 1
-                  <% } else { %>
-                    <%= item.rank %>
-                  <% } %>
-                </td>
-
-                <td>
-                  <%= item.competitor.name %>
-                </td>
-
-                <td>
-                  <%= item.appetizer === null ? '-' : item.appetizer %>
-                </td>
-
-                <td>
-                  <%= item.mainCourse === null ? '-' : item.mainCourse %>
-                </td>
-
-                <td>
-                  <%= item.dessert === null ? '-' : item.dessert %>
-                </td>
-
-                <td>
-                  <% if (item.complete) { %>
-                    <strong><%= item.finalScore.toFixed(2) %></strong>
-                  <% } else { %>
-                    -
-                  <% } %>
-                </td>
-
-                <td>
-                  <% if (item.complete) { %>
-                    <span class="success-message">Complete</span>
-                  <% } else { %>
-                    <span>
-                      Pending
-                      (<%= item.submittedEvaluations %>/<%= item.expectedEvaluations %>)
-                    </span>
-                  <% } %>
-                </td>
-              </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      </div>
-
-    <% } %>
-
-    <p class="ranking-back-container">
-      <a href="/admin" class="admin-back-link">
-        <i class="fa-solid fa-arrow-left"></i>
-        Back to Admin Panel
+    <aside class="dashboard-sidebar">
+      <a href="/" class="dashboard-brand">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Culinary Judge</span>
       </a>
-    </p>
 
-  </main>
+      <p class="dashboard-menu-label">MAIN MENU</p>
 
+      <a href="/admin" class="dashboard-nav-link">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="/competitors" class="dashboard-nav-link">
+        <i class="fa-solid fa-users"></i>
+        <span>Competitors</span>
+      </a>
+
+      <a href="/admin/judges" class="dashboard-nav-link">
+        <i class="fa-solid fa-user-check"></i>
+        <span>Judges</span>
+      </a>
+
+      <a href="/admin/ranking" class="dashboard-nav-link active">
+        <i class="fa-solid fa-trophy"></i>
+        <span>Final Ranking</span>
+      </a>
+
+      <div class="dashboard-sidebar-spacer"></div>
+
+      <a href="/" class="dashboard-nav-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Back to Home</span>
+      </a>
+
+      <form action="/auth/logout" method="POST">
+        <button type="submit" class="dashboard-nav-link dashboard-logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </form>
+    </aside>
+
+    <div class="dashboard-main">
+
+      <header class="dashboard-topbar">
+        <div>
+          <span class="dashboard-breadcrumb">Culinary Judge /</span>
+          <strong>Final Ranking</strong>
+        </div>
+
+        <div class="dashboard-admin-label">
+          <i class="fa-solid fa-trophy"></i>
+          <span>Competition Management</span>
+        </div>
+      </header>
+
+      <main class="dashboard-content">
+
+        <div class="dashboard-welcome">
+          <div>
+            <p class="dashboard-eyebrow">COMPETITION MANAGEMENT</p>
+            <h1>Final Ranking</h1>
+            <p>Final scores and ranking of all competition participants.</p>
+          </div>
+
+          <div class="dashboard-welcome-icon">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+        </div>
+
+        <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+          <div class="error-message no-print">
+            <%= errorMessage %>
+          </div>
+        <% } %>
+
+        <% if (judgeCount === 0) { %>
+
+          <div class="competitors-table-card no-print">
+            <p class="panel-empty-state">
+              No judges have been created yet.
+            </p>
+          </div>
+
+        <% } else if (ranking.length === 0) { %>
+
+          <div class="competitors-table-card no-print">
+            <p class="panel-empty-state">
+              No competitors have been added yet.
+            </p>
+          </div>
+
+        <% } else { %>
+
+          <div class="competitors-table-card ranking-card">
+
+            <div class="ranking-toolbar no-print">
+              <div class="ranking-info">
+                <p>
+                  <strong>Report date</strong>
+                  <%= new Date().toLocaleDateString('en-GB') %>
+                </p>
+
+                <p>
+                  <strong>Number of judges</strong>
+                  <%= judgeCount %>
+                </p>
+              </div>
+
+              <button
+                type="button"
+                class="panel-primary-button"
+                onclick="window.print()"
+              >
+                <i class="fa-solid fa-file-pdf"></i>
+                Print / Save as PDF
+              </button>
+            </div>
+
+            <div class="results-table-wrapper">
+              <table class="results-table panel-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Competitor</th>
+                    <th>Appetizer</th>
+                    <th>Main Course</th>
+                    <th>Dessert</th>
+                    <th>Final Score</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% ranking.forEach((item) => { %>
+                    <tr>
+                      <td>
+                        <% if (item.rank === 1) { %>
+                          <i class="fa-solid fa-trophy"></i>
+                          <strong>1</strong>
+                        <% } else { %>
+                          <%= item.rank %>
+                        <% } %>
+                      </td>
+
+                      <td>
+                        <strong><%= item.competitor.name %></strong>
+                      </td>
+
+                      <td>
+                        <%= item.appetizer === null ? '-' : item.appetizer %>
+                      </td>
+
+                      <td>
+                        <%= item.mainCourse === null ? '-' : item.mainCourse %>
+                      </td>
+
+                      <td>
+                        <%= item.dessert === null ? '-' : item.dessert %>
+                      </td>
+
+                      <td>
+                        <% if (item.complete) { %>
+                          <strong><%= item.finalScore.toFixed(2) %></strong>
+                        <% } else { %>
+                          -
+                        <% } %>
+                      </td>
+
+                      <td>
+                        <% if (item.complete) { %>
+                          <span class="ranking-complete">Complete</span>
+                        <% } else { %>
+                          <span>
+                            Pending
+                            (<%= item.submittedEvaluations %>/<%= item.expectedEvaluations %>)
+                          </span>
+                        <% } %>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+        <% } %>
+      </main>
+    </div>
+  </div>
 </body>
 </html>

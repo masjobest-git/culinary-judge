@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Judge | Culinary Judge</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/panel.css">
+</head>
+<body class="admin-page">
+  <main class="admin-container">
+    <h1>Edit Judge</h1>
+
+    <form action="/admin/judges/<%= judge._id %>/edit" method="POST">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        value="<%= judge.username %>"
+        required
+      >
+
+      <button type="submit">Save Changes</button>
+      <a href="/admin/judges">Cancel</a>
+    </form>
+  </main>
+</body>
+</html>

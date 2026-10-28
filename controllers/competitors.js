@@ -12,6 +12,7 @@ async function createCompetitor(req, res) {
     const competitor = new Competitor({
       name: req.body.name,
       school: req.body.school,
+      box: req.body.box,
       createdBy: req.user._id
     });
 
@@ -29,8 +30,16 @@ async function getCompetitors(req, res) {
   try {
     const competitors = await Competitor.find();
 
+    let editCompetitor = null;
+
+    if (req.query.edit) {
+      editCompetitor = await Competitor.findById(req.query.edit);
+    }
+
     res.render('competitors/index', {
-      competitors: competitors
+      competitors: competitors,
+      editCompetitor: editCompetitor,
+      showNewForm: req.query.new === 'true'
     });
   } catch (error) {
     console.log(error);
@@ -63,7 +72,8 @@ async function updateCompetitor(req, res) {
       req.params.id,
       {
         name: req.body.name,
-        school: req.body.school
+        school: req.body.school,
+        box: req.body.box
       },
       { runValidators: true }
     );

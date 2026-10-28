@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 const competitorSchema = new mongoose.Schema({
@@ -6,6 +7,10 @@ const competitorSchema = new mongoose.Schema({
     required: true
   },
   school: {
+    type: String,
+    required: true
+  },
+  box: {
     type: String,
     required: true
   },

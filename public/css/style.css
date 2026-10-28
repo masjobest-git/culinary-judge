@@ -1,3 +1,4 @@
+
 * {
   box-sizing: border-box;
 }
@@ -25,8 +26,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Buttons */
-
 button {
   padding: 10px 16px;
   border: none;
@@ -41,8 +40,6 @@ button:hover {
   background-color: #12536a;
 }
 
-/* Forms */
-
 input,
 select {
   padding: 9px;
@@ -50,8 +47,6 @@ select {
   border-radius: 5px;
   font-size: 14px;
 }
-
-/* Tables */
 
 table {
   width: 100%;
@@ -70,8 +65,6 @@ th {
   background-color: #17324d;
   color: white;
 }
-
-/* Navigation for application panels */
 
 .navbar {
   display: flex;
@@ -97,8 +90,6 @@ th {
   color: white;
 }
 
-/* Home page container */
-
 .home-container {
   max-width: 1500px;
   margin: 16px auto;
@@ -107,8 +98,6 @@ th {
   border-radius: 24px;
   background-color: white;
 }
-
-/* Home navigation */
 
 .home-navbar {
   display: flex;
@@ -137,8 +126,6 @@ th {
 .home-links a {
   color: #17324d;
 }
-
-/* Hero section */
 
 .hero {
   display: grid;
@@ -206,8 +193,6 @@ th {
   font-size: 64px;
 }
 
-/* Features */
-
 .features {
   padding: 24px 12px 0;
   text-align: center;
@@ -244,8 +229,6 @@ th {
   color: #64748b;
 }
 
-/* Footer */
-
 .home-footer {
   display: flex;
   justify-content: space-between;
@@ -269,8 +252,6 @@ th {
   font-size: 12px;
   line-height: 1.4;
 }
-
-/* Responsive layout */
 
 @media (max-width: 750px) {
   .home-navbar,
@@ -318,8 +299,6 @@ th {
   line-height: 1.6;
   margin-bottom: 15px;
 }
-
-/* Login page */
 
 .login-page {
   min-height: 100vh;
@@ -439,6 +418,13 @@ th {
   text-align: center;
 }
 
+.login-icon {
+  margin-bottom: 10px;
+  color: #176b87;
+  font-size: 42px;
+  text-align: center;
+}
+
 @media (max-width: 480px) {
   .login-container {
     padding: 16px;
@@ -452,15 +438,6 @@ th {
     font-size: 26px;
   }
 }
-
-.login-icon {
-  margin-bottom: 10px;
-  color: #176b87;
-  font-size: 42px;
-  text-align: center;
-}
-
-/* Evaluation Results page */
 
 .results-container {
   max-width: 1500px;
@@ -609,8 +586,6 @@ th {
   }
 }
 
-/* JUDGE PANEL */
-
 .judge-page {
   min-height: 100vh;
   background: #f4f6f9;
@@ -622,15 +597,16 @@ th {
 }
 
 .judge-sidebar {
-  width: 260px;
-  min-width: 260px;
-  padding: 30px 20px;
-  background: #17324d;
-  color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 12px;
+  width: 260px;
+  min-width: 260px;
+  min-height: calc(100vh - 70px);
+  padding: 30px 20px;
+  background: #17324d;
+  color: #ffffff;
 }
 
 .judge-sidebar-heading {
@@ -648,6 +624,7 @@ th {
 
 .judge-sidebar-heading h2 {
   margin: 0;
+  color: #ffffff;
   font-size: 20px;
 }
 
@@ -680,16 +657,24 @@ th {
 
 .judge-menu-button i {
   width: 18px;
+  flex-shrink: 0;
   text-align: center;
 }
 
 .judge-menu-button:hover {
   background: #176b87;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.judge-sidebar > a[href="/"] {
+  margin-top: auto;
 }
 
 .judge-logout-form {
-  margin-top: auto;
-  padding-top: 25px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .judge-logout-button {
@@ -766,6 +751,7 @@ th {
 
 .judge-primary-button:hover {
   background: #124f65;
+  text-decoration: none;
 }
 
 @media (max-width: 768px) {
@@ -774,14 +760,14 @@ th {
   }
 
   .judge-sidebar {
-    width: auto;
+    width: 100%;
     min-width: 0;
+    min-height: auto;
     padding: 20px;
   }
 
-  .judge-logout-form {
-    margin-top: 0;
-    padding-top: 5px;
+  .judge-sidebar > a[href="/"] {
+    margin-top: 12px;
   }
 
   .judge-main {
@@ -963,7 +949,8 @@ th {
   }
 }
 
-/* Final Ranking PDF button */
+/* FINAL RANKING PDF BUTTON */
+
 .ranking-pdf-button {
   display: inline-flex;
   align-items: center;
@@ -984,7 +971,8 @@ th {
   background-color: #991b1b;
 }
 
-/* Report heading */
+/* RANKING REPORT */
+
 .ranking-report-header {
   margin: 20px 0;
 }
@@ -997,12 +985,12 @@ th {
   font-size: 14px;
 }
 
-/* Back link spacing */
 .ranking-back-container {
   margin-top: 25px;
 }
 
-/* PDF / Print layout */
+/* ADMIN REPORT PRINT */
+
 @media print {
   @page {
     size: A4 landscape;
@@ -1014,7 +1002,6 @@ th {
     color: #000000 !important;
   }
 
-  /* Hide navigation and interactive elements */
   nav,
   .navbar,
   .ranking-pdf-button,
@@ -1024,7 +1011,6 @@ th {
     display: none !important;
   }
 
-  /* Use the full printable page */
   .admin-container {
     width: 100% !important;
     max-width: none !important;
@@ -1035,7 +1021,6 @@ th {
     border: none !important;
   }
 
-  /* Report title */
   .ranking-report-header {
     margin: 15px 0;
     text-align: center;
@@ -1060,7 +1045,6 @@ th {
     color: #000000 !important;
   }
 
-  /* Table */
   .results-table-wrapper {
     width: 100% !important;
     overflow: visible !important;
@@ -1106,7 +1090,8 @@ th {
   }
 }
 
-/* Judge Results PDF button */
+/* JUDGE RESULTS PDF BUTTON */
+
 .judge-results-pdf-button {
   display: inline-flex;
   align-items: center;
@@ -1127,7 +1112,8 @@ th {
   background-color: #991b1b;
 }
 
-/* Judge report heading */
+/* JUDGE REPORT */
+
 .judge-report-header {
   margin: 20px 0;
 }
@@ -1140,7 +1126,8 @@ th {
   font-size: 14px;
 }
 
-/* Judge Results PDF print layout */
+/* JUDGE RESULTS PRINT */
+
 @media print {
   @page {
     size: A4 landscape;
