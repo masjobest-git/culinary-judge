@@ -27,58 +27,55 @@ async function showResults(req, res) {
           continue;
         }
 
-        const groupResults = [];
-
-        for (const group of scoringGroups) {
-          let totalPoints = 0;
-          let judgeCount = 0;
-
-          for (const evaluation of categoryEvaluations) {
-            const groupScores = evaluation.criterionScores.filter((score) =>
-              score.scoringGroup &&
-              score.scoringGroup._id.toString() === group._id.toString()
-            );
-
-            if (groupScores.length > 0) {
-              totalPoints += groupScores.reduce(
-                (sum, score) => sum + score.points,
-                0
-              );
-              judgeCount++;
-            }
-          }
-
-          groupResults.push({
-            name: group.name,
-            average: judgeCount > 0
-              ? Number((totalPoints / judgeCount).toFixed(2))
-              : null
-          });
-        }
-
-        const totalPoints = categoryEvaluations.reduce(
-          (sum, evaluation) =>
-            sum + evaluation.criterionScores.reduce(
-              (scoreSum, score) => scoreSum + score.points,
-              0
-            ),
-          0
-        );
-
         // Find the current judge's evaluation
         const myEvaluation = categoryEvaluations.find(
           (evaluation) =>
             evaluation.judge.toString() === req.user._id.toString()
         );
 
+        // Show only the current judge's scores
+        const groupResults = [];
+
+        for (const group of scoringGroups) {
+          let groupTotal = null;
+
+          if (myEvaluation) {
+            const groupScores = myEvaluation.criterionScores.filter((score) =>
+              score.scoringGroup &&
+              score.scoringGroup._id.toString() === group._id.toString()
+            );
+
+            if (groupScores.length > 0) {
+              groupTotal = groupScores.reduce(
+                (sum, score) => sum + score.points,
+                0
+              );
+            }
+          }
+
+          groupResults.push({
+            name: group.name,
+            average: groupTotal
+          });
+        }
+
+        let myAverageTotal = null;
+
+        if (myEvaluation) {
+          const totalPoints = myEvaluation.criterionScores.reduce(
+            (sum, score) => sum + score.points,
+            0
+          );
+
+          myAverageTotal = Number(totalPoints.toFixed(2));
+        }
+
         results.push({
           competitor: competitor,
           category: category,
           judgeCount: categoryEvaluations.length,
           groups: groupResults,
-          averageTotal: Number(
-            (totalPoints / categoryEvaluations.length).toFixed(2)
-          ),
+          averageTotal: myAverageTotal,
           myEvaluation: myEvaluation || null
         });
       }

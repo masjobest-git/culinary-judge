@@ -1,38 +1,76 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
-  <title>Admin Panel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <title>Admin Panel | Culinary Judge</title>
 </head>
-<body>
+<body class="admin-page">
 
   <%- include('../partials/navbar') %>
 
-  <h1>Admin Panel</h1>
+  <main class="admin-container">
 
-  <% if (errorMessage) { %>
-    <p class="error-message"><%= errorMessage %></p>
-  <% } %>
+    <header class="admin-heading">
+      <div class="admin-heading-icon">
+        <i class="fa-solid fa-user-shield"></i>
+      </div>
+      <div>
+        <h1>Admin Panel</h1>
+        <p>Manage competitors, judges and competition results.</p>
+      </div>
+    </header>
 
-  <% if (successMessage) { %>
-    <p class="success-message"><%= successMessage %></p>
-  <% } %>
+    <% if (errorMessage) { %>
+      <p class="error-message"><%= errorMessage %></p>
+    <% } %>
 
-  <h2>Manage Culinary Judge</h2>
+    <% if (successMessage) { %>
+      <p class="success-message"><%= successMessage %></p>
+    <% } %>
 
-  <ul>
-    <li><a href="/competitors">View Competitors</a></li>
-    <li><a href="/admin/judges/new">Create Judge</a></li>
-  </ul>
+    <h2 class="admin-section-title">Manage Culinary Judge</h2>
 
-  <form action="/auth/logout" method="POST">
-    <button type="submit">Logout</button>
-  </form>
+    <div class="admin-cards">
 
-  <a href="/">Back to Home</a>
+      <a href="/competitors" class="admin-card">
+        <i class="fa-solid fa-users"></i>
+        <h3>Competitors</h3>
+        <p>View and manage competition participants.</p>
+        <span>View Competitors <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a href="/admin/judges/new" class="admin-card">
+        <i class="fa-solid fa-user-plus"></i>
+        <h3>Create Judge</h3>
+        <p>Create an account for a competition judge.</p>
+        <span>Create Judge <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+      <a href="/admin/ranking" class="admin-card admin-ranking-card">
+        <i class="fa-solid fa-trophy"></i>
+        <h3>Final Ranking</h3>
+        <p>Review the final scores and ranking of competitors.</p>
+        <span>View Final Ranking <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+
+    </div>
+
+    <footer class="admin-footer">
+      <a href="/" class="admin-back-link">
+        <i class="fa-solid fa-house"></i> Back to Home
+      </a>
+
+      <form action="/auth/logout" method="POST">
+        <button type="submit" class="admin-logout-button">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+      </form>
+    </footer>
+
+  </main>
 
 </body>
 </html>

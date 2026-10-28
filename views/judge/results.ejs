@@ -1,95 +1,141 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
-  <title>Evaluation Results</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <title>My Evaluation Results | Culinary Judge</title>
 </head>
 
-<body>
+<body class="results-page">
   <%- include('../partials/navbar') %>
 
-  <h1>Evaluation Results</h1>
+  <main class="results-container">
+    <div class="results-heading">
+      <div class="results-icon">
+        <i class="fa-solid fa-clipboard-check"></i>
+      </div>
 
-  <% if (successMessage) { %>
-    <p class="success-message"><%= successMessage %></p>
-  <% } %>
+      <h1>My Evaluation Results</h1>
+      <p>Your personal scores for each competitor and dish category.</p>
+    </div>
 
-  <% if (results.length === 0) { %>
-    <p>No evaluations have been submitted yet.</p>
-  <% } else { %>
+    <div class="judge-report-header">
+      <h2>Personal Evaluation Report</h2>
+      <p>
+        <strong>Report date:</strong>
+        <%= new Date().toLocaleDateString('en-GB') %>
+      </p>
+    </div>
 
-    <table border="1" cellpadding="8">
-      <thead>
-        <tr>
-          <th>Competitor</th>
-          <th>Dish Category</th>
-          <th>Judges</th>
-          <th>Preparatory Work</th>
-          <th>Cooking Process</th>
-          <th>Final Tasks</th>
-          <th>Taste and Appearance</th>
-          <th>Average Total</th>
-          <th>My Evaluation</th>
-        </tr>
-      </thead>
+    <% if (successMessage) { %>
+      <p class="success-message"><%= successMessage %></p>
+    <% } %>
 
-      <tbody>
-        <% results.forEach((result) => { %>
-          <tr>
-            <td><%= result.competitor.name %></td>
-            <td><%= result.category %></td>
-            <td><%= result.judgeCount %></td>
+    <button
+      type="button"
+      class="judge-results-pdf-button"
+      onclick="window.print()"
+    >
+      <i class="fa-solid fa-file-pdf"></i>
+      Download My Results PDF
+    </button>
 
-            <% result.groups.forEach((group) => { %>
-              <td>
-                <%= group.average === null ? '-' : group.average %>
-              </td>
+    <% if (results.length === 0) { %>
+      <div class="results-empty">
+        <i class="fa-solid fa-clipboard-list"></i>
+        <h2>No evaluations yet</h2>
+        <p>No evaluations have been submitted yet.</p>
+      </div>
+    <% } else { %>
+      <div class="results-table-wrapper">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Competitor</th>
+              <th>Dish Category</th>
+              <th>Judges Submitted</th>
+              <th>Preparatory Work</th>
+              <th>Cooking Process</th>
+              <th>Final Tasks</th>
+              <th>Taste and Appearance</th>
+              <th>My Total Points</th>
+              <th class="evaluation-action">My Evaluation</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% results.forEach((result) => { %>
+              <tr>
+                <td>
+                  <strong><%= result.competitor.name %></strong>
+                </td>
+
+                <td><%= result.category %></td>
+
+                <td><%= result.judgeCount %></td>
+
+                <% result.groups.forEach((group) => { %>
+                  <td>
+                    <%= group.average === null ? '-' : group.average %>
+                  </td>
+                <% }) %>
+
+                <td class="average-total">
+                  <strong>
+                    <%= result.averageTotal === null ? '-' : result.averageTotal %>
+                  </strong>
+                </td>
+
+                <td class="evaluation-action">
+                  <% if (result.myEvaluation) { %>
+                    <% if (result.myEvaluation.correctionUsed) { %>
+                      <span class="correction-used">
+                        <i class="fa-solid fa-check-circle"></i>
+                        Correction used
+                      </span>
+
+                      <% if (result.myEvaluation.correctionComment) { %>
+                        <p class="correction-detail">
+                          <strong>Reason:</strong>
+                          <%= result.myEvaluation.correctionComment %>
+                        </p>
+                      <% } %>
+
+                      <% if (result.myEvaluation.correctedAt) { %>
+                        <p class="correction-detail">
+                          <strong>Corrected:</strong>
+                          <%= result.myEvaluation.correctedAt.toLocaleDateString() %>
+                        </p>
+                      <% } %>
+                    <% } else { %>
+                      <a
+                        class="correct-button"
+                        href="/evaluations/<%= result.myEvaluation._id %>/correct"
+                      >
+                        <i class="fa-solid fa-pen"></i>
+                        Correct Evaluation
+                      </a>
+                    <% } %>
+                  <% } else { %>
+                    <span class="no-evaluation">
+                      No evaluation submitted by you
+                    </span>
+                  <% } %>
+                </td>
+              </tr>
             <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
 
-            <td><%= result.averageTotal %></td>
-
-            <td>
-              <% if (result.myEvaluation) { %>
-
-                <% if (result.myEvaluation.correctionUsed) { %>
-                  <p>Correction used</p>
-
-                  <% if (result.myEvaluation.correctionComment) { %>
-                    <p>
-                      <strong>Reason:</strong>
-                      <%= result.myEvaluation.correctionComment %>
-                    </p>
-                  <% } %>
-
-                  <% if (result.myEvaluation.correctedAt) { %>
-                    <p>
-                      <strong>Corrected at:</strong>
-                      <%= result.myEvaluation.correctedAt.toLocaleDateString() %>
-                    </p>
-                  <% } %>
-
-                <% } else { %>
-                  <a href="/evaluations/<%= result.myEvaluation._id %>/correct">
-                    Correct Evaluation
-                  </a>
-                <% } %>
-
-              <% } else { %>
-                <span>No evaluation submitted by you</span>
-              <% } %>
-            </td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
-
-  <% } %>
-
-  <p><a href="/judge">Back to Judge Panel</a></p>
+    <a class="back-to-panel" href="/judge">
+      <i class="fa-solid fa-arrow-left"></i>
+      Back to Judge Panel
+    </a>
+  </main>
 </body>
-
 </html>

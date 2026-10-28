@@ -4,24 +4,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link rel="stylesheet" href="/css/style.css">
-  <title>Login</title>
+  <title>Login | Culinary Judge</title>
 </head>
-<body>
-  <h1>Login</h1>
+<body class="login-page">
 
-  <% if (errorMessage) { %>
-    <p class="error-message"><%= errorMessage %></p>
-  <% } %>
+  <main class="login-container">
+    <div class="login-icon">
+  <i class="fa-solid fa-utensils"></i>
+</div>
+<a href="/" class="login-brand">Culinary Judge</a>
+    <div class="login-content">
+      <h1>Welcome Back</h1>
+      <p class="login-subtitle">Sign in to continue to your panel.</p>
 
-  <form action="/auth/login" method="POST">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
+      <% if (errorMessage) { %>
+        <p class="error-message"><%= errorMessage %></p>
+      <% } %>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+      <form action="/auth/login" method="POST" class="login-form">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter your username"
+          autocomplete="username"
+          required
+        >
 
-    <button type="submit">Login</button>
-  </form>
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          required
+        >
+
+        <button type="submit" class="login-button">Sign In</button>
+      </form>
+
+      <a href="/" class="login-back-link">Back to Home</a>
+    </div>
+
+    <footer class="login-footer">
+      Culinary Judge &copy; 2026
+    </footer>
+  </main>
+
 </body>
 </html>

@@ -1,47 +1,86 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
-  <title>Judge Panel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <title>Judge Panel | Culinary Judge</title>
 </head>
-<body>
+<body class="judge-page">
 
   <%- include('../partials/navbar') %>
 
-  <h1>Judge Panel</h1>
+  <div class="judge-layout">
 
-  <% if (errorMessage) { %>
-    <p class="error-message"><%= errorMessage %></p>
-  <% } %>
+    <!-- Left sidebar -->
+    <aside class="judge-sidebar">
+      <div class="judge-sidebar-heading">
+        <i class="fa-solid fa-gavel"></i>
+        <h2>Judge Panel</h2>
+      </div>
 
-  <% if (successMessage) { %>
-    <p class="success-message"><%= successMessage %></p>
-  <% } %>
+      <p class="judge-sidebar-text">Evaluation Menu</p>
 
-  <p>Welcome to Culinary Judge!</p>
+      <a class="judge-menu-button" href="/competitors">
+        <i class="fa-solid fa-users"></i>
+        <span>View Competitors</span>
+      </a>
 
-  <h2>Evaluation</h2>
+      <a class="judge-menu-button" href="/evaluations/results">
+        <i class="fa-solid fa-clipboard-check"></i>
+        <span>View Evaluation Results</span>
+      </a>
 
-  <p>Select a competitor to start the evaluation.</p>
+      <a class="judge-menu-button" href="/">
+        <i class="fa-solid fa-house"></i>
+        <span>Back to Home</span>
+      </a>
 
-  <a href="/competitors">View Competitors</a>
+      <form action="/auth/logout" method="POST" class="judge-logout-form">
+        <button type="submit" class="judge-menu-button judge-logout-button">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </form>
+    </aside>
 
-  <br><br>
+    <!-- Main content -->
+    <main class="judge-main">
 
-  <a href="/judge/results">View Evaluation Results</a>
+      <div class="judge-welcome">
+        <div class="judge-welcome-icon">
+          <i class="fa-solid fa-utensils"></i>
+        </div>
 
-  <br><br>
+        <h1>Welcome to Culinary Judge!</h1>
+        <p>Manage your evaluations and review the results of the competition.</p>
+      </div>
 
-  <a href="/">Back to Home</a>
+      <% if (errorMessage) { %>
+        <p class="error-message"><%= errorMessage %></p>
+      <% } %>
 
-  <br><br>
+      <% if (successMessage) { %>
+        <p class="success-message"><%= successMessage %></p>
+      <% } %>
 
-  <form action="/auth/logout" method="POST">
-    <button type="submit">Logout</button>
-  </form>
+      <section class="judge-evaluation-card">
+        <h2>
+          <i class="fa-solid fa-clipboard-list"></i>
+          Evaluation
+        </h2>
+
+        <p>Select a competitor to start the evaluation.</p>
+
+        <a href="/competitors" class="judge-primary-button">
+          <i class="fa-solid fa-arrow-right"></i>
+          Select Competitor
+        </a>
+      </section>
+
+    </main>
+  </div>
 
 </body>
 </html>
