@@ -4,138 +4,260 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/panel.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
   <title>My Evaluation Results | Culinary Judge</title>
 </head>
 
-<body class="results-page">
-  <%- include('../partials/navbar') %>
+<body class="admin-page judge-page results-page">
 
-  <main class="results-container">
-    <div class="results-heading">
-      <div class="results-icon">
+  <div class="dashboard-layout">
+
+    <aside class="dashboard-sidebar">
+      <a href="/" class="dashboard-brand">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Culinary Judge</span>
+      </a>
+
+      <p class="dashboard-menu-label">MAIN MENU</p>
+
+      <a href="/judge" class="dashboard-nav-link">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="/competitors" class="dashboard-nav-link">
+        <i class="fa-solid fa-users"></i>
+        <span>Competitors</span>
+      </a>
+
+      <a href="/evaluations/results" class="dashboard-nav-link active">
         <i class="fa-solid fa-clipboard-check"></i>
-      </div>
+        <span>My Evaluation Results</span>
+      </a>
 
-      <h1>My Evaluation Results</h1>
-      <p>Your personal scores for each competitor and dish category.</p>
-    </div>
+      <div class="dashboard-sidebar-spacer"></div>
 
-    <div class="judge-report-header">
-      <h2>Personal Evaluation Report</h2>
-      <p>
-        <strong>Report date:</strong>
-        <%= new Date().toLocaleDateString('en-GB') %>
-      </p>
-    </div>
+      <a href="/" class="dashboard-nav-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Back to Home</span>
+      </a>
 
-    <% if (successMessage) { %>
-      <p class="success-message"><%= successMessage %></p>
-    <% } %>
+      <form action="/auth/logout" method="POST">
+        <button type="submit" class="dashboard-nav-link dashboard-logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </form>
+    </aside>
 
-    <button
-      type="button"
-      class="judge-results-pdf-button"
-      onclick="window.print()"
-    >
-      <i class="fa-solid fa-file-pdf"></i>
-      Download My Results PDF
-    </button>
+    <div class="dashboard-main">
 
-    <% if (results.length === 0) { %>
-      <div class="results-empty">
-        <i class="fa-solid fa-clipboard-list"></i>
-        <h2>No evaluations yet</h2>
-        <p>No evaluations have been submitted yet.</p>
-      </div>
-    <% } else { %>
-      <div class="results-table-wrapper">
-        <table class="results-table">
-          <thead>
-            <tr>
-              <th>Competitor</th>
-              <th>Dish Category</th>
-              <th>Judges Submitted</th>
-              <th>Preparatory Work</th>
-              <th>Cooking Process</th>
-              <th>Final Tasks</th>
-              <th>Taste and Appearance</th>
-              <th>My Total Points</th>
-              <th class="evaluation-action">My Evaluation</th>
-            </tr>
-          </thead>
+      <header class="dashboard-topbar">
+        <div>
+          <span class="dashboard-breadcrumb">Culinary Judge /</span>
+          <strong>My Evaluation Results</strong>
+        </div>
 
-          <tbody>
-            <% results.forEach((result) => { %>
-              <tr>
-                <td>
-                  <strong><%= result.competitor.name %></strong>
-                </td>
+        <div class="dashboard-admin-label">
+          <i class="fa-solid fa-gavel"></i>
+          <span>Judge Panel</span>
+        </div>
+      </header>
 
-                <td><%= result.category %></td>
+      <main class="dashboard-content">
 
-                <td><%= result.judgeCount %></td>
+        <div class="dashboard-welcome">
+          <div>
+            <p class="dashboard-eyebrow">JUDGE WORKSPACE</p>
+            <h1>My Evaluation Results</h1>
+            <p>Review your submitted scores for each competitor and dish category.</p>
+          </div>
 
-                <% result.groups.forEach((group) => { %>
-                  <td>
-                    <%= group.average === null ? '-' : group.average %>
-                  </td>
-                <% }) %>
+          <div class="dashboard-welcome-icon">
+            <i class="fa-solid fa-clipboard-check"></i>
+          </div>
+        </div>
 
-                <td class="average-total">
-                  <strong>
-                    <%= result.averageTotal === null ? '-' : result.averageTotal %>
-                  </strong>
-                </td>
+        <% if (typeof successMessage !== 'undefined' && successMessage) { %>
+          <div class="success-message">
+            <%= successMessage %>
+          </div>
+        <% } %>
 
-                <td class="evaluation-action">
-                  <% if (result.myEvaluation) { %>
-                    <% if (result.myEvaluation.correctionUsed) { %>
-                      <span class="correction-used">
-                        <i class="fa-solid fa-check-circle"></i>
-                        Correction used
-                      </span>
+        <div class="judge-report-header">
+          <div>
+            <h2>Personal Evaluation Report</h2>
+            <p>
+              <strong>Report date:</strong>
+              <%= new Date().toLocaleDateString('en-GB') %>
+            </p>
+          </div>
 
-                      <% if (result.myEvaluation.correctionComment) { %>
-                        <p class="correction-detail">
-                          <strong>Reason:</strong>
-                          <%= result.myEvaluation.correctionComment %>
-                        </p>
-                      <% } %>
+          <button
+            type="button"
+            class="judge-results-pdf-button"
+            onclick="window.print()"
+          >
+            <i class="fa-solid fa-file-pdf"></i>
+            Download My Results PDF
+          </button>
+        </div>
 
-                      <% if (result.myEvaluation.correctedAt) { %>
-                        <p class="correction-detail">
-                          <strong>Corrected:</strong>
-                          <%= result.myEvaluation.correctedAt.toLocaleDateString() %>
-                        </p>
-                      <% } %>
+        <% if (results.length === 0) { %>
+
+          <div class="results-empty">
+            <i class="fa-solid fa-clipboard-list"></i>
+            <h2>No evaluations yet</h2>
+            <p>No evaluations have been submitted yet.</p>
+          </div>
+
+        <% } else { %>
+
+          <% const categories = ['Appetizer', 'Main Course', 'Dessert']; %>
+
+          <% categories.forEach((category) => { %>
+
+            <% const categoryResults = results.filter((result) => result.category === category); %>
+
+            <section class="competitors-table-card results-table-card category-results-section">
+
+              <div class="category-results-heading">
+                <div>
+                  <h2>
+                    <% if (category === 'Appetizer') { %>
+                      <i class="fa-solid fa-bowl-food"></i>
+                    <% } else if (category === 'Main Course') { %>
+                      <i class="fa-solid fa-utensils"></i>
                     <% } else { %>
-                      <a
-                        class="correct-button"
-                        href="/evaluations/<%= result.myEvaluation._id %>/correct"
-                      >
-                        <i class="fa-solid fa-pen"></i>
-                        Correct Evaluation
-                      </a>
+                      <i class="fa-solid fa-cookie-bite"></i>
                     <% } %>
-                  <% } else { %>
-                    <span class="no-evaluation">
-                      No evaluation submitted by you
-                    </span>
-                  <% } %>
-                </td>
-              </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      </div>
-    <% } %>
 
-    <a class="back-to-panel" href="/judge">
-      <i class="fa-solid fa-arrow-left"></i>
-      Back to Judge Panel
-    </a>
-  </main>
+                    <%= category %>
+                  </h2>
+
+                  <p>Personal scores for each competitor</p>
+                </div>
+
+                <span class="category-results-count">
+                  <%= categoryResults.length %>
+                  <%= categoryResults.length === 1 ? 'competitor' : 'competitors' %>
+                </span>
+              </div>
+
+              <% if (categoryResults.length === 0) { %>
+
+                <div class="results-category-empty">
+                  <i class="fa-solid fa-clipboard-list"></i>
+                  <p>No evaluations submitted for this category yet.</p>
+                </div>
+
+              <% } else { %>
+
+                <div class="results-table-wrapper">
+                  <table class="panel-table results-table">
+
+                    <thead>
+                      <tr>
+                        <th>Competitor</th>
+
+                        <% categoryResults[0].groups.forEach((group) => { %>
+                          <th><%= group.name %></th>
+                        <% }) %>
+
+                        <th class="total-points-heading">My Total Points</th>
+                        <th class="evaluation-action">Status / Action</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <% categoryResults.forEach((result) => { %>
+
+                        <tr>
+                          <td class="competitor-name-cell">
+                            <strong><%= result.competitor.name %></strong>
+                          </td>
+
+                          <% result.groups.forEach((group) => { %>
+                            <td class="group-points-cell">
+                              <%= group.average === null ? '-' : group.average %>
+                            </td>
+                          <% }) %>
+
+                          <td class="average-total">
+                            <strong>
+                              <%= result.averageTotal === null ? '-' : result.averageTotal %>
+                            </strong>
+                          </td>
+
+                          <td class="evaluation-action">
+
+                            <% if (result.myEvaluation) { %>
+
+                              <% if (result.myEvaluation.correctionUsed) { %>
+
+                                <span class="correction-used">
+                                  <i class="fa-solid fa-check-circle"></i>
+                                  Correction used
+                                </span>
+
+                                <% if (result.myEvaluation.correctionComment) { %>
+                                  <p class="correction-detail">
+                                    <strong>Reason:</strong>
+                                    <%= result.myEvaluation.correctionComment %>
+                                  </p>
+                                <% } %>
+
+                                <% if (result.myEvaluation.correctedAt) { %>
+                                  <p class="correction-detail">
+                                    <strong>Corrected:</strong>
+                                    <%= new Date(result.myEvaluation.correctedAt).toLocaleDateString('en-GB') %>
+                                  </p>
+                                <% } %>
+
+                              <% } else { %>
+
+                                <a
+                                  class="correct-button"
+                                  href="/evaluations/<%= result.myEvaluation._id %>/correct"
+                                >
+                                  <i class="fa-solid fa-pen"></i>
+                                  Correct Evaluation
+                                </a>
+
+                              <% } %>
+
+                            <% } else { %>
+
+                              <span class="no-evaluation">
+                                No evaluation submitted by you
+                              </span>
+
+                            <% } %>
+
+                          </td>
+                        </tr>
+
+                      <% }) %>
+                    </tbody>
+
+                  </table>
+                </div>
+
+              <% } %>
+
+            </section>
+
+          <% }) %>
+
+        <% } %>
+
+      </main>
+    </div>
+  </div>
+
 </body>
 </html>

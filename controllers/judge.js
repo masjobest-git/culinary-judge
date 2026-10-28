@@ -1,7 +1,6 @@
 
 const resultsController = require('./results');
 
-// Show judge dashboard
 function showJudgePanel(req, res) {
   if (req.user.role !== 'judge') {
     req.session.errorMessage = 'Access denied. You do not have permission to access the Judge Panel.';
@@ -20,7 +19,6 @@ function showJudgePanel(req, res) {
   });
 }
 
-// Show evaluation results
 function showResults(req, res) {
   if (req.user.role !== 'judge') {
     req.session.errorMessage = 'Access denied. You do not have permission to access the Judge Panel.';

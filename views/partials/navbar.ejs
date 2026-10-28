@@ -3,8 +3,19 @@
   <a href="/" class="navbar-brand">Culinary Judge</a>
 
   <div class="navbar-links">
-    <a href="/admin">Admin Panel</a>
-    <a href="/judge">Judge Panel</a>
-    <a href="/competitors">Competitors</a>
+    <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+
+      <% if (currentUser.role === 'admin') { %>
+        <a href="/admin">Admin Panel</a>
+        <a href="/competitors">Competitors</a>
+        <a href="/admin/judges">Judges</a>
+        <a href="/admin/ranking">Final Ranking</a>
+      <% } else if (currentUser.role === 'judge') { %>
+        <a href="/judge">Judge Panel</a>
+        <a href="/competitors">Competitors</a>
+        <a href="/evaluations/results">My Evaluation Results</a>
+      <% } %>
+
+    <% } %>
   </div>
 </nav>

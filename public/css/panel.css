@@ -1,3 +1,4 @@
+
 * {
   box-sizing: border-box;
 }
@@ -57,6 +58,8 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
+
+/* ADMIN PANEL */
 
 .admin-page {
   min-height: 100vh;
@@ -329,6 +332,8 @@ table {
   margin-left: 5px;
 }
 
+/* COMPETITORS */
+
 .competitors-toolbar {
   display: flex;
   align-items: center;
@@ -489,6 +494,8 @@ table {
   text-align: center;
 }
 
+/* COMPETITOR FORMS */
+
 .competitor-form-card {
   margin-bottom: 24px;
   padding: 22px;
@@ -603,6 +610,8 @@ table {
   font-weight: 700;
   white-space: nowrap;
 }
+
+/* JUDGE PANEL */
 
 .judge-page {
   min-height: 100vh;
@@ -782,6 +791,8 @@ table {
   text-decoration: none;
 }
 
+/* MESSAGES */
+
 .error-message {
   padding: 12px 16px;
   margin-bottom: 18px;
@@ -799,6 +810,405 @@ table {
   background: #f0fdf4;
   color: #166534;
 }
+
+/* FINAL RANKING */
+
+.ranking-card {
+  padding: 24px;
+}
+
+.ranking-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.ranking-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+}
+
+.ranking-info p {
+  margin: 0;
+  color: #475569;
+  font-size: 14px;
+}
+
+.ranking-info strong {
+  margin-right: 5px;
+  color: #1e293b;
+}
+
+.results-table .ranking-complete {
+  display: inline-block !important;
+  padding: 5px 10px !important;
+  border: 1px solid #86efac !important;
+  border-radius: 6px !important;
+  background: #dcfce7 !important;
+  color: #166534 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  white-space: nowrap;
+}
+
+/* JUDGE DASHBOARD */
+
+.judge-dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.judge-dashboard-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 28px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.judge-dashboard-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #1e3a8a;
+  font-size: 21px;
+}
+
+.judge-dashboard-card h2 {
+  margin: 0 0 10px;
+  color: #1e293b;
+  font-size: 20px;
+}
+
+.judge-dashboard-card p {
+  margin: 0 0 24px;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.judge-dashboard-card .panel-primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: auto;
+  text-decoration: none;
+}
+
+/* EVALUATE COMPETITOR */
+
+.evaluation-page-card {
+  width: 100%;
+  max-width: none;
+  padding: 24px;
+}
+
+.evaluation-competitor-info {
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.evaluation-competitor-info h2 {
+  margin: 0 0 6px;
+  color: #172554;
+  font-size: 20px;
+}
+
+.evaluation-competitor-info p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.evaluation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dish-category-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 4px;
+  padding: 16px 18px;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  background: #eff6ff;
+}
+
+.dish-category-card label {
+  color: #172554;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.dish-category-card select {
+  width: 100%;
+  max-width: 420px;
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background: white;
+  font-size: 13px;
+}
+
+.evaluation-group {
+  overflow: hidden;
+  margin-bottom: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: white;
+}
+
+.evaluation-group-heading {
+  padding: 11px 18px;
+  border-bottom: 1px solid #dbe4f0;
+  background: #e8efff;
+}
+
+.evaluation-group-heading h3 {
+  margin: 0;
+  color: #172554;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.evaluation-criteria {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 18px;
+  padding: 14px 18px;
+}
+
+.evaluation-criterion {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 9px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.evaluation-criterion label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.evaluation-criterion label small {
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.evaluation-criterion input {
+  width: 100%;
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background: #f8fafc;
+  font-size: 13px;
+}
+
+.evaluation-criterion input:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.evaluation-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* JUDGE EVALUATION RESULTS */
+
+.category-results-section {
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+
+.category-results-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.category-results-heading h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 6px;
+  font-size: 20px;
+}
+
+.category-results-heading h2 i {
+  color: #b77936;
+}
+
+.category-results-heading p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.category-results-count {
+  flex-shrink: 0;
+  padding: 7px 12px;
+  border-radius: 20px;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.results-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.results-table {
+  width: 100%;
+  min-width: 1000px;
+  table-layout: auto;
+  border-collapse: collapse;
+}
+
+.results-table th,
+.results-table td {
+  padding: 14px 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.results-table thead th {
+  background: #f8fafc;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.results-table thead th:first-child,
+.results-table tbody td:first-child {
+  text-align: left;
+}
+
+.results-table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.results-table tbody tr:hover {
+  background: #f3f6fa;
+}
+
+.results-table tbody td {
+  border-bottom: 1px solid #edf0f3;
+  font-size: 13px;
+}
+
+.results-table .competitor-name-cell {
+  min-width: 170px;
+}
+
+.results-table .group-points-cell {
+  min-width: 120px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.results-table .average-total {
+  min-width: 120px;
+  background: #f0f7f2;
+  color: #17643a;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.results-table .average-total strong {
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.results-table .total-points-heading {
+  min-width: 130px;
+  background: #e8f3eb;
+  color: #17643a;
+  text-align: center;
+}
+
+.results-table .evaluation-action {
+  min-width: 180px;
+}
+
+.results-table .correct-button {
+  display: inline-block;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.results-table .correction-detail {
+  margin: 8px 0 0;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+}
+
+.results-category-empty {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  color: #6b7280;
+}
+
+.results-category-empty i {
+  font-size: 20px;
+}
+
+.results-category-empty p {
+  margin: 0;
+}
+
+/* RESPONSIVE DESIGN */
 
 @media (max-width: 1000px) {
   .dashboard-cards {
@@ -826,6 +1236,12 @@ table {
 
   .judge-sidebar > a.judge-menu-button[href="/"] {
     margin-top: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .judge-dashboard-cards {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -892,6 +1308,52 @@ table {
   .panel-table td {
     padding: 13px 12px;
   }
+
+  .category-results-heading {
+    align-items: flex-start;
+    padding: 18px;
+  }
+
+  .category-results-heading h2 {
+    font-size: 18px;
+  }
+
+  .results-table th,
+  .results-table td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  .judge-report-header {
+    align-items: flex-start;
+    gap: 16px;
+    flex-direction: column;
+  }
+
+  .evaluation-page-card {
+    padding: 16px;
+  }
+
+  .evaluation-criteria {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .evaluation-group-heading {
+    padding: 10px 12px;
+  }
+
+  .evaluation-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .evaluation-form-actions a,
+  .evaluation-form-actions button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 480px) {
@@ -906,53 +1368,8 @@ table {
   }
 }
 
-/* FINAL RANKING */
-.ranking-card {
-  padding: 24px;
-}
+/* PRINT: ONLY THE RESULTS TABLE */
 
-.ranking-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-  margin-bottom: 24px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.ranking-info {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px 32px;
-}
-
-.ranking-info p {
-  margin: 0;
-  color: #475569;
-  font-size: 14px;
-}
-
-.ranking-info strong {
-  color: #1e293b;
-  margin-right: 5px;
-}
-
-/* Green Complete label */
-.results-table .ranking-complete {
-  display: inline-block !important;
-  padding: 5px 10px !important;
-  border-radius: 6px !important;
-  background: #dcfce7 !important;
-  color: #166534 !important;
-  border: 1px solid #86efac !important;
-  font-size: 12px !important;
-  font-weight: 700 !important;
-  white-space: nowrap;
-}
-
-/* PRINT: only the ranking table */
 @media print {
   @page {
     size: landscape;
@@ -993,6 +1410,7 @@ table {
   body.admin-page .results-table {
     display: table !important;
     width: 100% !important;
+    min-width: 0 !important;
     border-collapse: collapse !important;
     table-layout: auto !important;
     font-size: 10pt !important;
@@ -1025,66 +1443,5 @@ table {
     color: #166534 !important;
     background: #dcfce7 !important;
     border: 1px solid #86efac !important;
-  }
-}
-
-/* JUDGE DASHBOARD */
-
-.judge-dashboard-cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
-  margin-top: 28px;
-}
-
-.judge-dashboard-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 28px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-}
-
-.judge-dashboard-card-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  margin-bottom: 18px;
-  border-radius: 10px;
-  background: #eff6ff;
-  color: #1e3a8a;
-  font-size: 21px;
-}
-
-.judge-dashboard-card h2 {
-  margin: 0 0 10px;
-  color: #1e293b;
-  font-size: 20px;
-}
-
-.judge-dashboard-card p {
-  margin: 0 0 24px;
-  color: #64748b;
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-.judge-dashboard-card .panel-primary-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: auto;
-  text-decoration: none;
-}
-
-@media (max-width: 768px) {
-  .judge-dashboard-cards {
-    grid-template-columns: 1fr;
   }
 }

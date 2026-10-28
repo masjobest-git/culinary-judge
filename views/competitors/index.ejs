@@ -4,9 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/panel.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
   <title>Competitors | Culinary Judge</title>
 </head>
 
@@ -21,25 +23,44 @@
 
       <p class="dashboard-menu-label">MAIN MENU</p>
 
-      <a href="/admin" class="dashboard-nav-link">
-        <i class="fa-solid fa-house"></i>
-        <span>Dashboard</span>
-      </a>
+      <% const isAdmin = typeof currentUser !== 'undefined' && currentUser && currentUser.role === 'admin'; %>
 
-      <a href="/competitors" class="dashboard-nav-link active">
-        <i class="fa-solid fa-users"></i>
-        <span>Competitors</span>
-      </a>
+      <% if (isAdmin) { %>
+        <a href="/admin" class="dashboard-nav-link">
+          <i class="fa-solid fa-house"></i>
+          <span>Dashboard</span>
+        </a>
 
-      <a href="/admin/judges" class="dashboard-nav-link">
-        <i class="fa-solid fa-user-check"></i>
-        <span>Judges</span>
-      </a>
+        <a href="/competitors" class="dashboard-nav-link active">
+          <i class="fa-solid fa-users"></i>
+          <span>Competitors</span>
+        </a>
 
-      <a href="/admin/ranking" class="dashboard-nav-link">
-        <i class="fa-solid fa-trophy"></i>
-        <span>Final Ranking</span>
-      </a>
+        <a href="/admin/judges" class="dashboard-nav-link">
+          <i class="fa-solid fa-user-check"></i>
+          <span>Judges</span>
+        </a>
+
+        <a href="/admin/ranking" class="dashboard-nav-link">
+          <i class="fa-solid fa-trophy"></i>
+          <span>Final Ranking</span>
+        </a>
+      <% } else { %>
+        <a href="/judge" class="dashboard-nav-link">
+          <i class="fa-solid fa-house"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="/competitors" class="dashboard-nav-link active">
+          <i class="fa-solid fa-users"></i>
+          <span>Competitors</span>
+        </a>
+
+        <a href="/evaluations/results" class="dashboard-nav-link">
+          <i class="fa-solid fa-clipboard-check"></i>
+          <span>My Evaluation Results</span>
+        </a>
+      <% } %>
 
       <div class="dashboard-sidebar-spacer"></div>
 
@@ -87,48 +108,29 @@
         <div class="competitors-toolbar">
           <h2 class="dashboard-section-title">All Competitors</h2>
 
-          <a href="/competitors?new=true" class="panel-primary-button">
-            <i class="fa-solid fa-plus"></i>
-            Add New Competitor
-          </a>
+          <% if (isAdmin) { %>
+            <a href="/competitors?new=true" class="panel-primary-button">
+              <i class="fa-solid fa-plus"></i>
+              Add New Competitor
+            </a>
+          <% } %>
         </div>
-
-     <% if (typeof showNewForm !== 'undefined' && showNewForm) { %>        
-            <div class="competitors-table-card">
+        <% if (typeof showNewForm !== 'undefined' && showNewForm && isAdmin) { %>
+          <div class="competitors-table-card">
             <h2 class="dashboard-section-title">Add New Competitor</h2>
-
             <form action="/competitors" method="POST" class="competitor-inline-edit">
-
               <div class="competitor-form-field">
                 <label for="new-name">Full Name</label>
-                <input
-                  type="text"
-                  id="new-name"
-                  name="name"
-                  required
-                >
+                <input type="text" id="new-name" name="name" required>
               </div>
-
               <div class="competitor-form-field">
                 <label for="new-school">School</label>
-                <input
-                  type="text"
-                  id="new-school"
-                  name="school"
-                  required
-                >
+                <input type="text" id="new-school" name="school" required>
               </div>
 
               <div class="competitor-form-field">
                 <label for="new-box">BOX Number</label>
-                <input
-                  type="number"
-                  id="new-box"
-                  name="box"
-                  min="1"
-                  step="1"
-                  required
-                >
+                <input type="number" id="new-box" name="box" min="1" step="1" required>
               </div>
 
               <div class="competitor-form-buttons">
@@ -146,7 +148,6 @@
           </div>
         <% } %>
 
-        <!-- Competitors Table -->
         <div class="competitors-table-card">
           <table class="panel-table">
             <thead>
@@ -160,9 +161,13 @@
 
             <tbody>
               <% competitors.forEach((competitor) => { %>
-
                 <tr>
-                  <% if (editCompetitor && editCompetitor._id.toString() === competitor._id.toString()) { %>
+                  <% if (
+                    typeof editCompetitor !== 'undefined' &&
+                    editCompetitor &&
+                    editCompetitor._id.toString() === competitor._id.toString() &&
+                    isAdmin
+                  ) { %>
 
                     <td colspan="4">
                       <form
@@ -170,6 +175,7 @@
                         method="POST"
                         class="competitor-inline-edit"
                       >
+
                         <div class="competitor-form-field">
                           <label for="name-<%= competitor._id %>">Full Name</label>
                           <input
@@ -215,6 +221,7 @@
                             Cancel
                           </a>
                         </div>
+
                       </form>
                     </td>
 
@@ -252,31 +259,32 @@
                           Evaluate
                         </a>
 
-                        <a
-                          href="/competitors?edit=<%= competitor._id %>"
-                          class="panel-action-button edit"
-                        >
-                          <i class="fa-solid fa-pen"></i>
-                          Edit
-                        </a>
+                        <% if (isAdmin) { %>
+                          <a
+                            href="/competitors?edit=<%= competitor._id %>"
+                            class="panel-action-button edit"
+                          >
+                            <i class="fa-solid fa-pen"></i>
+                            Edit
+                          </a>
 
-                        <form
-                          action="/competitors/<%= competitor._id %>/delete"
-                          method="POST"
-                          onsubmit="return confirm('Are you sure you want to delete this competitor?')"
-                        >
-                          <button type="submit" class="panel-action-button delete">
-                            <i class="fa-solid fa-trash"></i>
-                            Delete
-                          </button>
-                        </form>
+                          <form
+                            action="/competitors/<%= competitor._id %>/delete"
+                            method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this competitor?')"
+                          >
+                            <button type="submit" class="panel-action-button delete">
+                              <i class="fa-solid fa-trash"></i>
+                              Delete
+                            </button>
+                          </form>
+                        <% } %>
 
                       </div>
                     </td>
 
                   <% } %>
                 </tr>
-
               <% }) %>
 
               <% if (competitors.length === 0) { %>
