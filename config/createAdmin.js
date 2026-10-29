@@ -29,6 +29,7 @@ async function createAdmin() {
     console.log('Username: admin');
     console.log('Password: Admin123!');
   } catch (error) {
+    res.send(error.message)
     console.log(error);
     process.exitCode = 1;
   } finally {
