@@ -1,4 +1,3 @@
-
 const Competitor = require('../models/Competitor');
 
 // Show new competitor form

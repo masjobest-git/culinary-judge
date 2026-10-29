@@ -1,4 +1,3 @@
-
 const Competitor = require('../models/Competitor');
 const Evaluation = require('../models/Evaluation');
 const ScoringGroup = require('../models/ScoringGroup');

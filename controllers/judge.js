@@ -1,4 +1,3 @@
-
 const resultsController = require('./results');
 
 function showJudgePanel(req, res) {
