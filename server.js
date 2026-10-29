@@ -4,14 +4,14 @@ const mongoose = require("mongoose");
 const path = require("path");
 const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
-const dns = require("node:dns");
+//const dns = require("node:dns");
 const dotenv = require("dotenv");
 const methodOverride = require("method-override");
 
 dotenv.config();
 
 // DNS settings
-dns.setServers(["1.1.1.1", "8.8.8.8"]);
+//dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 const app = express();
 
