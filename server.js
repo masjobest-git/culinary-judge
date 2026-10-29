@@ -22,7 +22,13 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
-
+app.use((req, res, next) => {
+  console.log("URL:", req.originalUrl);
+  console.log("Session ID:", req.sessionID);
+  console.log("User ID:", req.session.userId);
+  console.log("Role:", req.session.role);
+  next();
+});
 app.use((req, res, next) => {
   if (req.session.userId && req.session.role) {
     res.locals.currentUser = {
@@ -44,17 +50,6 @@ const adminRouter = require("./routes/admin");
 const judgeRouter = require("./routes/judge");
 const evaluationsRouter = require("./routes/evaluations");
 
-
-app.use(express.static(path.join(__dirname, "public")));
-
-
-app.use("/auth", authRouter);
-app.use("/admin", adminRouter);
-app.use("/judge", judgeRouter);
-app.use("/competitors", competitorsRouter);
-app.use("/evaluations", evaluationsRouter);
-
-
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB");
@@ -66,6 +61,17 @@ mongoose.connect(process.env.MONGODB_URI)
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
+
+app.use(express.static(path.join(__dirname, "public")));
+
+
+app.use("/auth", authRouter);
+app.use("/admin", adminRouter);
+app.use("/judge", judgeRouter);
+app.use("/competitors", competitorsRouter);
+app.use("/evaluations", evaluationsRouter);
+
+
 
 
 app.get("/", (req, res) => {
