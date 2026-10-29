@@ -209,7 +209,7 @@ async function createScoringGroup(req, res) {
   }
 
   try {
-    const name = req.body.name.trim();
+    const name = (req.body.name || '').trim();
 
     if (!name) {
       req.session.errorMessage = 'Group name is required.';
@@ -237,6 +237,50 @@ async function createScoringGroup(req, res) {
   }
 }
 
+// Edit scoring group name
+async function updateScoringGroup(req, res) {
+  if (req.user.role !== 'admin') {
+    req.session.errorMessage = 'Access denied.';
+    return res.redirect('/judge');
+  }
+
+  try {
+    const name = (req.body.name || '').trim();
+
+    if (!name) {
+      req.session.errorMessage = 'Group name is required.';
+      return res.redirect('/admin/scoring-groups');
+    }
+
+    const scoringGroup = await ScoringGroup.findById(req.params.id);
+
+    if (!scoringGroup) {
+      req.session.errorMessage = 'Scoring group not found.';
+      return res.redirect('/admin/scoring-groups');
+    }
+
+    const existingGroup = await ScoringGroup.findOne({
+      name,
+      _id: { $ne: scoringGroup._id }
+    });
+
+    if (existingGroup) {
+      req.session.errorMessage = 'Another scoring group already uses this name.';
+      return res.redirect('/admin/scoring-groups');
+    }
+
+    scoringGroup.name = name;
+    await scoringGroup.save();
+
+    req.session.successMessage = 'Scoring group updated successfully!';
+    res.redirect('/admin/scoring-groups');
+  } catch (error) {
+    console.log(error);
+    req.session.errorMessage = 'Error updating scoring group.';
+    res.redirect('/admin/scoring-groups');
+  }
+}
+
 // Add criterion to a scoring group
 async function addCriterion(req, res) {
   if (req.user.role !== 'admin') {
@@ -246,7 +290,6 @@ async function addCriterion(req, res) {
 
   try {
     const { name, minPoints, maxPoints } = req.body;
-
     const scoringGroup = await ScoringGroup.findById(req.params.id);
 
     if (!scoringGroup) {
@@ -254,12 +297,12 @@ async function addCriterion(req, res) {
       return res.redirect('/admin/scoring-groups');
     }
 
+    const criterionName = (name || '').trim();
     const min = Number(minPoints);
     const max = Number(maxPoints);
 
     if (
-      !name ||
-      !name.trim() ||
+      !criterionName ||
       minPoints === '' ||
       maxPoints === '' ||
       !Number.isFinite(min) ||
@@ -272,7 +315,7 @@ async function addCriterion(req, res) {
     }
 
     scoringGroup.criteria.push({
-      name: name.trim(),
+      name: criterionName,
       minPoints: min,
       maxPoints: max
     });
@@ -288,6 +331,62 @@ async function addCriterion(req, res) {
   }
 }
 
+// Edit criterion name, minimum and maximum points
+async function updateCriterion(req, res) {
+  if (req.user.role !== 'admin') {
+    req.session.errorMessage = 'Access denied.';
+    return res.redirect('/judge');
+  }
+
+  try {
+    const { name, minPoints, maxPoints } = req.body;
+
+    const scoringGroup = await ScoringGroup.findById(req.params.id);
+
+    if (!scoringGroup) {
+      req.session.errorMessage = 'Scoring group not found.';
+      return res.redirect('/admin/scoring-groups');
+    }
+
+    const criterion = scoringGroup.criteria.id(req.params.criterionId);
+
+    if (!criterion) {
+      req.session.errorMessage = 'Criterion not found.';
+      return res.redirect('/admin/scoring-groups');
+    }
+
+    const criterionName = (name || '').trim();
+    const min = Number(minPoints);
+    const max = Number(maxPoints);
+
+    if (
+      !criterionName ||
+      minPoints === '' ||
+      maxPoints === '' ||
+      !Number.isFinite(min) ||
+      !Number.isFinite(max) ||
+      min < 0 ||
+      max < min
+    ) {
+      req.session.errorMessage = 'Enter a valid criterion and point range.';
+      return res.redirect('/admin/scoring-groups');
+    }
+
+    criterion.name = criterionName;
+    criterion.minPoints = min;
+    criterion.maxPoints = max;
+
+    await scoringGroup.save();
+
+    req.session.successMessage = 'Criterion updated successfully!';
+    res.redirect('/admin/scoring-groups');
+  } catch (error) {
+    console.log(error);
+    req.session.errorMessage = 'Error updating criterion.';
+    res.redirect('/admin/scoring-groups');
+  }
+}
+
 module.exports = {
   showAdminPanel,
   showJudges,
@@ -297,5 +396,7 @@ module.exports = {
   deleteJudge,
   showScoringGroups,
   createScoringGroup,
-  addCriterion
+  updateScoringGroup,
+  addCriterion,
+  updateCriterion
 };

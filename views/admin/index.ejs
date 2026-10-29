@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +10,6 @@
 </head>
 
 <body class="admin-page">
-
   <div class="dashboard-layout">
 
     <aside class="dashboard-sidebar">
@@ -35,6 +33,11 @@
       <a href="/admin/judges" class="dashboard-nav-link">
         <i class="fa-solid fa-user-check"></i>
         <span>Judges</span>
+      </a>
+
+      <a href="/admin/scoring-groups" class="dashboard-nav-link">
+        <i class="fa-solid fa-list-check"></i>
+        <span>Scoring Groups</span>
       </a>
 
       <a href="/admin/ranking" class="dashboard-nav-link">
@@ -77,7 +80,7 @@
           <div>
             <p class="dashboard-eyebrow">ADMINISTRATION</p>
             <h1>Admin Dashboard</h1>
-            <p>Manage competitors, judges and competition results.</p>
+            <p>Manage competitors, judges, scoring criteria and competition results.</p>
           </div>
 
           <div class="dashboard-welcome-icon">
@@ -115,6 +118,15 @@
             <span>View Judges <i class="fa-solid fa-arrow-right"></i></span>
           </a>
 
+          <a href="/admin/scoring-groups" class="dashboard-card">
+            <div class="dashboard-card-icon purple">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+            <h3>Scoring Groups</h3>
+            <p>Manage scoring groups and evaluation criteria.</p>
+            <span>Manage Scoring Groups <i class="fa-solid fa-arrow-right"></i></span>
+          </a>
+
           <a href="/admin/ranking" class="dashboard-card">
             <div class="dashboard-card-icon gold">
               <i class="fa-solid fa-trophy"></i>
@@ -129,6 +141,5 @@
       </main>
     </div>
   </div>
-
 </body>
 </html>

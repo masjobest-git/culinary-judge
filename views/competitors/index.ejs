@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,6 +38,11 @@
         <a href="/admin/judges" class="dashboard-nav-link">
           <i class="fa-solid fa-user-check"></i>
           <span>Judges</span>
+        </a>
+
+        <a href="/admin/scoring-groups" class="dashboard-nav-link">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Scoring Groups</span>
         </a>
 
         <a href="/admin/ranking" class="dashboard-nav-link">
@@ -115,14 +119,17 @@
             </a>
           <% } %>
         </div>
+
         <% if (typeof showNewForm !== 'undefined' && showNewForm && isAdmin) { %>
           <div class="competitors-table-card">
             <h2 class="dashboard-section-title">Add New Competitor</h2>
+
             <form action="/competitors" method="POST" class="competitor-inline-edit">
               <div class="competitor-form-field">
                 <label for="new-name">Full Name</label>
                 <input type="text" id="new-name" name="name" required>
               </div>
+
               <div class="competitor-form-field">
                 <label for="new-school">School</label>
                 <input type="text" id="new-school" name="school" required>
@@ -143,7 +150,6 @@
                   Cancel
                 </a>
               </div>
-
             </form>
           </div>
         <% } %>
@@ -297,6 +303,7 @@
             </tbody>
           </table>
         </div>
+
       </main>
     </div>
   </div>

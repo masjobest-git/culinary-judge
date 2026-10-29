@@ -31,11 +31,25 @@ router.get('/scoring-groups', isSignedIn, adminController.showScoringGroups);
 // Create scoring group
 router.post('/scoring-groups', isSignedIn, adminController.createScoringGroup);
 
+// Update scoring group name
+router.post(
+  '/scoring-groups/:id/edit',
+  isSignedIn,
+  adminController.updateScoringGroup
+);
+
 // Add criterion to a scoring group
 router.post(
   '/scoring-groups/:id/criteria',
   isSignedIn,
   adminController.addCriterion
+);
+
+// Update criterion name, minimum and maximum points
+router.post(
+  '/scoring-groups/:id/criteria/:criterionId/edit',
+  isSignedIn,
+  adminController.updateCriterion
 );
 
 module.exports = router;

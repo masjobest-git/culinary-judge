@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/panel.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <title>Scoring Groups | Culinary Judge</title>
+</head>
+
+<body class="admin-page">
+  <div class="dashboard-layout">
+
+    <aside class="dashboard-sidebar">
+      <a href="/" class="dashboard-brand">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Culinary Judge</span>
+      </a>
+
+      <p class="dashboard-menu-label">MAIN MENU</p>
+
+      <a href="/admin" class="dashboard-nav-link">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="/competitors" class="dashboard-nav-link">
+        <i class="fa-solid fa-users"></i>
+        <span>Competitors</span>
+      </a>
+
+      <a href="/admin/judges" class="dashboard-nav-link">
+        <i class="fa-solid fa-user-check"></i>
+        <span>Judges</span>
+      </a>
+
+      <a href="/admin/scoring-groups" class="dashboard-nav-link active">
+        <i class="fa-solid fa-list-check"></i>
+        <span>Scoring Groups</span>
+      </a>
+
+      <a href="/admin/ranking" class="dashboard-nav-link">
+        <i class="fa-solid fa-trophy"></i>
+        <span>Final Ranking</span>
+      </a>
+
+      <div class="dashboard-sidebar-spacer"></div>
+
+      <a href="/" class="dashboard-nav-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Back to Home</span>
+      </a>
+
+      <form action="/auth/logout" method="POST">
+        <button type="submit" class="dashboard-nav-link dashboard-logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </form>
+    </aside>
+
+    <div class="dashboard-main">
+
+      <header class="dashboard-topbar">
+        <div>
+          <span class="dashboard-breadcrumb">Culinary Judge /</span>
+          <strong> Scoring Groups</strong>
+        </div>
+
+        <div class="dashboard-admin-label">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Competition Management</span>
+        </div>
+      </header>
+
+      <main class="dashboard-content">
+
+        <div class="dashboard-welcome">
+          <div>
+            <p class="dashboard-eyebrow">COMPETITION MANAGEMENT</p>
+            <h1>Scoring Groups</h1>
+            <p>Manage scoring groups and evaluation criteria.</p>
+          </div>
+
+          <div class="dashboard-welcome-icon">
+            <i class="fa-solid fa-list-check"></i>
+          </div>
+        </div>
+
+        <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+          <div class="error-message">
+            <%= errorMessage %>
+          </div>
+        <% } %>
+
+        <% if (typeof successMessage !== 'undefined' && successMessage) { %>
+          <div class="success-message">
+            <%= successMessage %>
+          </div>
+        <% } %>
+
+        <!-- Create scoring group -->
+        <div class="competitors-table-card">
+          <h2 class="dashboard-section-title">Create Scoring Group</h2>
+
+          <form
+            action="/admin/scoring-groups"
+            method="POST"
+            class="competitor-inline-edit"
+          >
+            <div class="competitor-form-field">
+              <label for="new-group-name">Group Name</label>
+              <input
+                type="text"
+                id="new-group-name"
+                name="name"
+                placeholder="e.g. Appetizer"
+                required
+              >
+            </div>
+
+            <div class="competitor-form-buttons">
+              <button type="submit" class="panel-primary-button">
+                <i class="fa-solid fa-plus"></i>
+                Create Group
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="competitors-toolbar">
+          <h2 class="dashboard-section-title">All Scoring Groups</h2>
+        </div>
+
+        <% if (scoringGroups.length === 0) { %>
+          <div class="competitors-table-card">
+            <p class="panel-empty-state">
+              No scoring groups have been created yet.
+            </p>
+          </div>
+        <% } %>
+
+        <% scoringGroups.forEach(group => { %>
+
+          <div class="competitors-table-card">
+
+            <!-- Scoring group heading and Edit button -->
+            <div class="competitors-toolbar">
+              <h2 class="dashboard-section-title">
+                <i class="fa-solid fa-folder-open"></i>
+                <%= group.name %>
+              </h2>
+
+              <button
+                type="button"
+                class="panel-primary-button"
+                onclick="toggleEdit('group-<%= group._id %>')"
+              >
+                <i class="fa-solid fa-pen"></i>
+                Edit
+              </button>
+            </div>
+
+            <!-- Edit scoring group form -->
+            <form
+              id="group-<%= group._id %>"
+              action="/admin/scoring-groups/<%= group._id %>/edit"
+              method="POST"
+              class="competitor-inline-edit"
+              style="display: none;"
+            >
+              <div class="competitor-form-field">
+                <label for="group-name-<%= group._id %>">
+                  Group Name
+                </label>
+
+                <input
+                  type="text"
+                  id="group-name-<%= group._id %>"
+                  name="name"
+                  value="<%= group.name %>"
+                  required
+                >
+              </div>
+
+              <div class="competitor-form-buttons">
+                <button type="submit" class="panel-primary-button">
+                  <i class="fa-solid fa-floppy-disk"></i>
+                  Save Group
+                </button>
+
+                <button
+                  type="button"
+                  class="panel-primary-button"
+                  onclick="toggleEdit('group-<%= group._id %>')"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+
+            <hr>
+
+            <h3>Evaluation Criteria</h3>
+
+            <% if (group.criteria.length === 0) { %>
+              <p class="panel-empty-state">
+                No criteria have been added yet.
+              </p>
+            <% } else { %>
+
+              <% group.criteria.forEach(criterion => { %>
+
+                <div class="competitors-table-card">
+
+                  <!-- Criterion details and Edit button -->
+                  <div class="competitors-toolbar">
+                    <div>
+                      <h4>
+                        <i class="fa-solid fa-check-circle"></i>
+                        <%= criterion.name %>
+                      </h4>
+
+                      <p>
+                        Minimum: <%= criterion.minPoints %>
+                        | Maximum: <%= criterion.maxPoints %>
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      class="panel-primary-button"
+                      onclick="toggleEdit('criterion-<%= criterion._id %>')"
+                    >
+                      <i class="fa-solid fa-pen"></i>
+                      Edit
+                    </button>
+                  </div>
+
+                  <!-- Edit criterion form -->
+                  <form
+                    id="criterion-<%= criterion._id %>"
+                    action="/admin/scoring-groups/<%= group._id %>/criteria/<%= criterion._id %>/edit"
+                    method="POST"
+                    class="competitor-inline-edit"
+                    style="display: none;"
+                  >
+
+                    <div class="competitor-form-field">
+                      <label for="criterion-name-<%= criterion._id %>">
+                        Criterion Name
+                      </label>
+
+                      <input
+                        type="text"
+                        id="criterion-name-<%= criterion._id %>"
+                        name="name"
+                        value="<%= criterion.name %>"
+                        required
+                      >
+                    </div>
+
+                    <div class="competitor-form-field">
+                      <label for="min-points-<%= criterion._id %>">
+                        Minimum Points
+                      </label>
+
+                      <input
+                        type="number"
+                        id="min-points-<%= criterion._id %>"
+                        name="minPoints"
+                        value="<%= criterion.minPoints %>"
+                        min="0"
+                        step="any"
+                        required
+                      >
+                    </div>
+
+                    <div class="competitor-form-field">
+                      <label for="max-points-<%= criterion._id %>">
+                        Maximum Points
+                      </label>
+
+                      <input
+                        type="number"
+                        id="max-points-<%= criterion._id %>"
+                        name="maxPoints"
+                        value="<%= criterion.maxPoints %>"
+                        min="0"
+                        step="any"
+                        required
+                      >
+                    </div>
+
+                    <div class="competitor-form-buttons">
+                      <button type="submit" class="panel-primary-button">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Save Changes
+                      </button>
+
+                      <button
+                        type="button"
+                        class="panel-primary-button"
+                        onclick="toggleEdit('criterion-<%= criterion._id %>')"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+
+                  </form>
+                </div>
+
+              <% }) %>
+
+            <% } %>
+
+            <hr>
+
+            <!-- Add a new criterion -->
+            <h3>Add Evaluation Criterion</h3>
+
+            <form
+              action="/admin/scoring-groups/<%= group._id %>/criteria"
+              method="POST"
+              class="competitor-inline-edit"
+            >
+
+              <div class="competitor-form-field">
+                <label for="new-criterion-name-<%= group._id %>">
+                  Criterion Name
+                </label>
+
+                <input
+                  type="text"
+                  id="new-criterion-name-<%= group._id %>"
+                  name="name"
+                  placeholder="e.g. Taste"
+                  required
+                >
+              </div>
+
+              <div class="competitor-form-field">
+                <label for="new-min-points-<%= group._id %>">
+                  Minimum Points
+                </label>
+
+                <input
+                  type="number"
+                  id="new-min-points-<%= group._id %>"
+                  name="minPoints"
+                  min="0"
+                  step="any"
+                  required
+                >
+              </div>
+
+              <div class="competitor-form-field">
+                <label for="new-max-points-<%= group._id %>">
+                  Maximum Points
+                </label>
+
+                <input
+                  type="number"
+                  id="new-max-points-<%= group._id %>"
+                  name="maxPoints"
+                  min="0"
+                  step="any"
+                  required
+                >
+              </div>
+
+              <div class="competitor-form-buttons">
+                <button type="submit" class="panel-primary-button">
+                  <i class="fa-solid fa-plus"></i>
+                  Add Criterion
+                </button>
+              </div>
+
+            </form>
+
+          </div>
+
+        <% }) %>
+
+      </main>
+    </div>
+  </div>
+
+  <script>
+    function toggleEdit(id) {
+      const form = document.getElementById(id);
+
+      if (!form) {
+        return;
+      }
+
+      if (form.style.display === 'none') {
+        form.style.display = 'flex';
+      } else {
+        form.style.display = 'none';
+      }
+    }
+  </script>
+
+</body>
+</html>
