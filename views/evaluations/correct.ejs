@@ -1,64 +1,178 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="/css/style.css">
-  <title>Correct Evaluation</title>
+  <link rel="stylesheet" href="/css/panel.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <title>Correct Evaluation | Culinary Judge</title>
 </head>
-<body>
-  <%- include('../partials/navbar') %>
 
-  <h1>Correct Evaluation</h1>
+<body class="admin-page judge-page">
 
-  <h2><%= competitor.name %></h2>
-  <p>School: <%= competitor.school %></p>
-  <p>Dish Category: <%= evaluation.dishCategory %></p>
+  <div class="dashboard-layout">
 
-  <form action="/evaluations/<%= evaluation._id %>/correct" method="POST">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
 
-    <% scoringGroups.forEach((group) => { %>
-      <h3><%= group.name %></h3>
+      <a href="/" class="dashboard-brand">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Culinary Judge</span>
+      </a>
 
-      <% group.criteria.forEach((criterion) => {
-        const existingScore = evaluation.criterionScores.find(
-          (score) => score.criterionName === criterion.name
-        );
-      %>
-        <p>
-          <label>
-            <%= criterion.name %>
-            (<%= criterion.minPoints %>–<%= criterion.maxPoints %> points)
-          </label>
+      <p class="dashboard-menu-label">MAIN MENU</p>
 
-          <input
-            type="number"
-            name="scores[<%= criterion.name %>]"
-            min="<%= criterion.minPoints %>"
-            max="<%= criterion.maxPoints %>"
-            value="<%= existingScore ? existingScore.points : '' %>"
-            required
+      <a href="/judge" class="dashboard-nav-link">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="/competitors" class="dashboard-nav-link">
+        <i class="fa-solid fa-users"></i>
+        <span>Competitors</span>
+      </a>
+
+      <a href="/evaluations/results" class="dashboard-nav-link active">
+        <i class="fa-solid fa-clipboard-check"></i>
+        <span>My Evaluation Results</span>
+      </a>
+
+      <div class="dashboard-sidebar-spacer"></div>
+
+      <a href="/" class="dashboard-nav-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Back to Home</span>
+      </a>
+
+      <form action="/auth/logout" method="POST">
+        <button type="submit" class="dashboard-nav-link dashboard-logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </form>
+
+    </aside>
+
+    <!-- Main content -->
+    <div class="dashboard-main">
+
+      <header class="dashboard-topbar">
+        <div>
+          <span class="dashboard-breadcrumb">Culinary Judge /</span>
+          <strong>Correct Evaluation</strong>
+        </div>
+
+        <div class="dashboard-admin-label">
+          <i class="fa-solid fa-gavel"></i>
+          <span>Judge Panel</span>
+        </div>
+      </header>
+
+      <main class="dashboard-content">
+
+        <div class="dashboard-welcome">
+          <div>
+            <p class="dashboard-eyebrow">EVALUATION CORRECTION</p>
+            <h1>Correct Evaluation</h1>
+            <p>Review and correct the submitted scores.</p>
+          </div>
+
+          <div class="dashboard-welcome-icon">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </div>
+        </div>
+
+        <section class="judge-dashboard-card correct-evaluation-card">
+
+          <div class="evaluation-competitor-info">
+            <h2><%= competitor.name %></h2>
+            <p>School: <%= competitor.school %></p>
+            <p>Dish Category: <%= evaluation.dishCategory %></p>
+          </div>
+
+          <form
+            action="/evaluations/<%= evaluation._id %>/correct"
+            method="POST"
+            class="evaluation-form"
           >
-        </p>
-      <% }) %>
-    <% }) %>
 
-    <p>
-      <label for="correctionComment">
-        Reason for correction (required):
-      </label>
-      <textarea
-        id="correctionComment"
-        name="correctionComment"
-        rows="4"
-        required
-      ></textarea>
-    </p>
+            <% scoringGroups.forEach((group) => { %>
+              <section class="evaluation-group">
 
-    <button type="submit">Save Correction</button>
-  </form>
+                <div class="evaluation-group-heading">
+                  <h3><%= group.name %></h3>
+                </div>
 
-  <p><a href="/judge/results">Back to Results</a></p>
+                <div class="evaluation-criteria">
+                  <% group.criteria.forEach((criterion) => {
+                    const existingScore = evaluation.criterionScores.find(
+                      (score) => score.criterionName === criterion.name
+                    );
+                  %>
+
+                    <div class="evaluation-criterion">
+                      <label for="score-<%= criterion._id %>">
+                        <%= criterion.name %>
+                        <small>
+                          (<%= criterion.minPoints %>–<%= criterion.maxPoints %> points)
+                        </small>
+                      </label>
+
+                      <input
+                        id="score-<%= criterion._id %>"
+                        type="number"
+                        name="scores[<%= criterion.name %>]"
+                        min="<%= criterion.minPoints %>"
+                        max="<%= criterion.maxPoints %>"
+                        step="any"
+                        value="<%= existingScore ? existingScore.points : '' %>"
+                        required
+                      >
+                    </div>
+
+                  <% }) %>
+                </div>
+
+              </section>
+            <% }) %>
+
+            <div class="correction-comment-card">
+              <label for="correctionComment">
+                Reason for correction (required)
+              </label>
+
+              <textarea
+                id="correctionComment"
+                name="correctionComment"
+                rows="4"
+                required
+                placeholder="Explain why this evaluation is being corrected..."
+              ></textarea>
+            </div>
+
+            <div class="evaluation-form-actions">
+              <a href="/evaluations/results" class="panel-action-button edit">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Results
+              </a>
+
+              <button type="submit" class="panel-primary-button">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Save Correction
+              </button>
+            </div>
+
+          </form>
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
 </body>
 </html>

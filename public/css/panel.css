@@ -59,8 +59,6 @@ table {
   border-collapse: collapse;
 }
 
-/* ADMIN PANEL */
-
 .admin-page {
   min-height: 100vh;
   background: #f3f6fb;
@@ -332,8 +330,6 @@ table {
   margin-left: 5px;
 }
 
-/* COMPETITORS */
-
 .competitors-toolbar {
   display: flex;
   align-items: center;
@@ -494,8 +490,6 @@ table {
   text-align: center;
 }
 
-/* COMPETITOR FORMS */
-
 .competitor-form-card {
   margin-bottom: 24px;
   padding: 22px;
@@ -610,8 +604,6 @@ table {
   font-weight: 700;
   white-space: nowrap;
 }
-
-/* JUDGE PANEL */
 
 .judge-page {
   min-height: 100vh;
@@ -791,8 +783,6 @@ table {
   text-decoration: none;
 }
 
-/* MESSAGES */
-
 .error-message {
   padding: 12px 16px;
   margin-bottom: 18px;
@@ -810,8 +800,6 @@ table {
   background: #f0fdf4;
   color: #166534;
 }
-
-/* FINAL RANKING */
 
 .ranking-card {
   padding: 24px;
@@ -856,8 +844,6 @@ table {
   font-weight: 700 !important;
   white-space: nowrap;
 }
-
-/* JUDGE DASHBOARD */
 
 .judge-dashboard-cards {
   display: grid;
@@ -911,8 +897,6 @@ table {
   margin-top: auto;
   text-decoration: none;
 }
-
-/* EVALUATE COMPETITOR */
 
 .evaluation-page-card {
   width: 100%;
@@ -1052,8 +1036,6 @@ table {
   padding-top: 14px;
   border-top: 1px solid #e2e8f0;
 }
-
-/* JUDGE EVALUATION RESULTS */
 
 .category-results-section {
   margin-bottom: 28px;
@@ -1207,8 +1189,6 @@ table {
 .results-category-empty p {
   margin: 0;
 }
-
-/* RESPONSIVE DESIGN */
 
 @media (max-width: 1000px) {
   .dashboard-cards {
@@ -1368,80 +1348,350 @@ table {
   }
 }
 
-/* PRINT: ONLY THE RESULTS TABLE */
+.correct-evaluation-page {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 28px 36px;
+}
+
+.correct-evaluation-card {
+  width: 100%;
+  max-width: none;
+  padding: 24px;
+}
+
+.correct-evaluation-card .evaluation-competitor-info h1 {
+  margin: 0 0 12px;
+  font-size: 24px;
+}
+
+.correct-evaluation-card .evaluation-competitor-info h2 {
+  margin: 0 0 6px;
+  font-size: 19px;
+}
+
+.correct-evaluation-card .evaluation-competitor-info p {
+  margin: 4px 0;
+  font-size: 13px;
+}
+
+.correction-comment-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.correction-comment-card label {
+  color: #172554;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.correction-comment-card textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background: #f8fafc;
+  color: #1e293b;
+  font: inherit;
+  font-size: 13px;
+  resize: vertical;
+}
+
+.correction-comment-card textarea:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.judge-results-pdf-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 11px 18px;
+  border: none;
+  border-radius: 7px;
+  background-color: #0d6efd;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.judge-results-pdf-button:hover {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+@media (max-width: 700px) {
+  .correct-evaluation-page {
+    padding: 18px;
+  }
+
+  .correct-evaluation-card {
+    padding: 16px;
+  }
+}
 
 @media print {
-  @page {
-    size: landscape;
-    margin: 10mm;
+  .judge-results-pdf-button {
+    display: none !important;
+  }
+}
+
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-  html,
-  body.admin-page {
-    width: 100% !important;
+  body,
+  body.admin-page,
+  body.judge-page,
+  body.results-page {
     margin: 0 !important;
     padding: 0 !important;
-    background: #fff !important;
+    background: #ffffff !important;
+    color: #1e293b !important;
   }
 
-  body.admin-page * {
-    visibility: hidden !important;
+  .dashboard-sidebar,
+  .dashboard-topbar,
+  .dashboard-welcome-icon,
+  .judge-results-pdf-button,
+  .no-print,
+  .correct-button,
+  .success-message {
+    display: none !important;
   }
 
-  body.admin-page .results-table-wrapper,
-  body.admin-page .results-table-wrapper * {
-    visibility: visible !important;
+  .dashboard-layout,
+  .dashboard-main,
+  .dashboard-content {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
   }
 
-  body.admin-page .results-table-wrapper {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
+  .dashboard-welcome {
+    display: block !important;
+    margin: 0 0 14px !important;
+    padding: 0 0 12px !important;
+    border: none !important;
+    border-bottom: 2px solid #2563eb !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  .dashboard-welcome h1 {
+    color: #172554 !important;
+    font-size: 22px !important;
+  }
+
+  .dashboard-welcome p {
+    color: #475569 !important;
+  }
+
+  .judge-report-header {
+    display: block !important;
+    margin: 0 0 16px !important;
+    padding: 0 0 10px !important;
+    border: none !important;
+    border-bottom: 1px solid #cbd5e1 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    break-after: avoid !important;
+  }
+
+  .judge-report-header h2 {
+    color: #1e3a8a !important;
+    font-size: 18px !important;
+  }
+
+  .judge-report-header p {
+    color: #475569 !important;
+    font-size: 11px !important;
+  }
+
+  .category-results-section,
+  .results-table-card,
+  .competitors-table-card {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 16px !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    break-inside: auto !important;
+  }
+
+  .category-results-heading {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 9px 12px !important;
+    border: none !important;
+    background: #2563eb !important;
+    color: #ffffff !important;
+    break-after: avoid !important;
+  }
+
+  .category-results-heading h2,
+  .category-results-heading p,
+  .category-results-heading h2 i {
+    color: #ffffff !important;
+  }
+
+  .category-results-heading h2 {
+    font-size: 13px !important;
+  }
+
+  .category-results-heading p {
+    font-size: 10px !important;
+  }
+
+  .category-results-count {
+    padding: 4px 8px !important;
+    border: 1px solid #bfdbfe !important;
+    border-radius: 12px !important;
+    background: #eff6ff !important;
+    color: #1e3a8a !important;
+    font-size: 9px !important;
+  }
+
+  .results-table-wrapper {
+    display: block !important;
     width: 100% !important;
     max-width: none !important;
     height: auto !important;
     overflow: visible !important;
     margin: 0 !important;
     padding: 0 !important;
-    border: none !important;
-    box-shadow: none !important;
   }
 
-  body.admin-page .results-table {
+  .results-table {
     display: table !important;
     width: 100% !important;
     min-width: 0 !important;
     border-collapse: collapse !important;
     table-layout: auto !important;
-    font-size: 10pt !important;
+    font-size: 9px !important;
   }
 
-  body.admin-page .results-table thead {
+  .results-table thead {
     display: table-header-group !important;
   }
 
-  body.admin-page .results-table tbody {
+  .results-table tbody {
     display: table-row-group !important;
   }
 
-  body.admin-page .results-table tr {
+  .results-table tr {
     display: table-row !important;
     break-inside: avoid !important;
   }
 
-  body.admin-page .results-table th,
-  body.admin-page .results-table td {
-    display: table-cell !important;
-    padding: 8px !important;
-    border: 1px solid #999 !important;
-    color: #000 !important;
-    background: #fff !important;
-    text-align: left;
+  .results-table th {
+    padding: 7px 6px !important;
+    border: 1px solid #bfdbfe !important;
+    background: #dbeafe !important;
+    color: #1e3a8a !important;
+    font-size: 9px !important;
+    text-align: left !important;
   }
 
-  body.admin-page .results-table .ranking-complete {
-    color: #166534 !important;
-    background: #dcfce7 !important;
-    border: 1px solid #86efac !important;
+  .results-table td {
+    display: table-cell !important;
+    padding: 7px 6px !important;
+    border: 1px solid #cbd5e1 !important;
+    background: #ffffff !important;
+    color: #1e293b !important;
+    font-size: 9px !important;
+    text-align: left !important;
+    vertical-align: top !important;
+    overflow-wrap: anywhere !important;
   }
+
+  .results-table tbody tr:nth-child(even) td {
+    background: #eff6ff !important;
+  }
+
+  .results-table .average-total,
+  .results-table .average-total strong {
+    background: #dbeafe !important;
+    color: #1e3a8a !important;
+    font-weight: 700 !important;
+  }
+
+  .results-table .total-points-heading {
+    background: #bfdbfe !important;
+    color: #1e3a8a !important;
+  }
+
+  .results-table .competitor-name-cell strong {
+    color: #1e3a8a !important;
+  }
+
+  .correction-used {
+    color: #1d4ed8 !important;
+    font-weight: 700 !important;
+  }
+
+  .correction-detail {
+    margin: 4px 0 0 !important;
+    color: #334155 !important;
+    font-size: 8px !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .no-evaluation {
+    color: #475569 !important;
+  }
+
+  .results-category-empty,
+  .results-empty {
+    background: #ffffff !important;
+    color: #475569 !important;
+  }
+
+  a {
+    color: #1e3a8a !important;
+    text-decoration: none !important;
+  }
+}
+button.judge-results-pdf-button,
+.judge-main .judge-results-pdf-button {
+  background: #2563eb !important;
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+button.judge-results-pdf-button:hover,
+.judge-main .judge-results-pdf-button:hover {
+  background: #1d4ed8 !important;
+  background-color: #1d4ed8 !important;
+  color: #ffffff !important;
 }
