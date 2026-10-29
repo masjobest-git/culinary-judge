@@ -1,9 +1,8 @@
-
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const session = require("express-session");
-const dns = require("node:dns");
+//const dns = require("node:dns");
 const dotenv = require("dotenv");
 const methodOverride = require("method-override");
 
@@ -12,7 +11,8 @@ dotenv.config();
 const app = express();
 
 app.set("view engine", "ejs");
-
+app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
@@ -36,7 +36,7 @@ app.use((req, res, next) => {
   next();
 });
 
-dns.setServers(["1.1.1.1", "8.8.8.8"]);
+//dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 const competitorsRouter = require("./routes/competitors");
 const authRouter = require("./routes/auth");
@@ -77,6 +77,4 @@ app.get("/about", (req, res) => {
   res.render("about");
 });
 
-app.listen(3000, () => {
-  console.log("The app is running on port 3000");
-});
+module.exports = app;
