@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const isSignedIn = require('../middleware/is-signed-in');
@@ -25,5 +24,18 @@ router.post('/judges/:id/edit', isSignedIn, adminController.updateJudge);
 
 // Delete judge
 router.post('/judges/:id/delete', isSignedIn, adminController.deleteJudge);
+
+// Show scoring groups
+router.get('/scoring-groups', isSignedIn, adminController.showScoringGroups);
+
+// Create scoring group
+router.post('/scoring-groups', isSignedIn, adminController.createScoringGroup);
+
+// Add criterion to a scoring group
+router.post(
+  '/scoring-groups/:id/criteria',
+  isSignedIn,
+  adminController.addCriterion
+);
 
 module.exports = router;

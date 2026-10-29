@@ -23,7 +23,6 @@ app.use(session({
   saveUninitialized: false
 }));
 
-
 app.use((req, res, next) => {
   if (req.session.userId && req.session.role) {
     res.locals.currentUser = {
