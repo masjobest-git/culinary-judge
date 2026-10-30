@@ -67,35 +67,52 @@ The application includes separate Admin and Judge panels to support competition 
 
 ### *Future Updates*
 
-- [ ] Connect configurable scoring groups directly to the evaluation forms
-- [ ] Improve score calculation and averaging
-- [ ] Add more detailed competition reports
-- [ ] Improve validation and error handling
-- [ ] Improve the user interface and responsiveness
-- [ ] Add additional competition management features
+- Connect configurable scoring groups directly to the evaluation forms
+- Improve score calculation and averaging
+- Add more detailed competition reports
+- Improve validation and error handling
+- Improve the user interface and responsiveness
+- Add additional competition management features
 
 ---
 
 ### *Screenshots*
 
+#### Main page (Home page)
+
+![Intro Screen](./public/images/Home-page.png)
+
+#### Culinary Judge — Login Page
+
+![Intro Screen](./public/images/Login-Page.png)
+
 #### Culinary Judge — Admin Dashboard
 
-
+![Intro Screen](./public/images/Admin-Dashboard.png)
 
 #### Culinary Judge — Competitors
 
+![Intro Screen](./public/images/Competitors.png)
 
+#### Culinary Judge — Judges
 
-#### Culinary Judge — Scoring Groups
-
-
-
-#### Culinary Judge — Judge Panel
-
-
+![Intro Screen](./public/images/Judges.png)
 
 #### Culinary Judge — Final Ranking
 
+![Intro Screen](./public/images/Final-Ranking.png)
+
+#### Culinary Judge — Judge Dashboard
+
+![Intro Screen](./public/images/Judge-Dashboard.png)
+
+#### Culinary Judge — Competitors
+
+![Intro Screen](./public/images/Judge-Competitors.png)
+
+#### Culinary Judge — My Evaluation Results
+
+![Intro Screen](./public/images/My-Evaluation-Results.png)
 
 
 ---
